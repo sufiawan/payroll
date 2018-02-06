@@ -26,9 +26,9 @@
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
 
           <mat-form-field fxFlex="50">
-            <input matInput placeholder="Company Code" formControlName="companyCd" required>
-            <mat-error *ngIf="formErrors.companyCd.required">
-              Company Code is required!
+            <input matInput placeholder="Payroll Component Code" formControlName="componentCd" required>
+            <mat-error *ngIf="formErrors.componentCd.required">
+              Payroll Component Code is required!
             </mat-error>
           </mat-form-field>
 
@@ -37,30 +37,77 @@
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
 
           <mat-form-field fxFlex="100">
-            <input matInput placeholder="Company Name" formControlName="name" required>
+            <input matInput placeholder="Payroll Component Name" formControlName="name" required>
             <mat-error *ngIf="formErrors.name.required">
-              Company Name is required!
+              Payroll Component Name is required!
             </mat-error>
           </mat-form-field>
 
         </div>
 
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-
           <mat-form-field fxFlex="100">
-            <input matInput placeholder="Location" formControlName="location" required>
-            <mat-error *ngIf="formErrors.location.required">
-              Location is required!
-            </mat-error>
+            <mat-select placeholder="Calculation Type" formControlName="intervalType" required>
+              <mat-option *ngFor="let item of intervalTypeOption" [value]="item.value">
+                {{ item.display_name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+          <!-- <mat-form-field fxFlex="100"> -->
+          <mat-checkbox formControlName="tax">Taxable</mat-checkbox>
+          <!-- </mat-form-field> -->
+
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+          <!-- <mat-form-field fxFlex="100"> -->
+          <mat-checkbox formControlName="absentDeduct">Absent Deduction</mat-checkbox>
+          <!-- </mat-form-field> -->
+
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+          <!-- <mat-form-field fxFlex="100"> -->
+          <mat-checkbox formControlName="payrollDeduct">Payroll Deduction</mat-checkbox>
+          <!-- </mat-form-field> -->
+
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+          <!-- <mat-form-field fxFlex="100"> -->
+          <mat-checkbox formControlName="compSubsidize">Company Subsidize</mat-checkbox>
+          <!-- </mat-form-field> -->
+
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+          <mat-checkbox (change)="onChecked($event.checked)" [(ngModel)]="isProRate" [ngModelOptions]="{standalone: true}">Pro Rate</mat-checkbox>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+          <mat-form-field fxFlex="100">
+            <mat-select placeholder="Pro Rate" formControlName="proRate" required>
+              <mat-option *ngFor="let item of proRateOption" [value]="item.id">
+                {{ item.name }}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
 
         </div>
+
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
           <div class="button-row">
             <button mat-raised-button class="mat-accent" type="submit">
               Submit
             </button>
-            <a mat-raised-button [routerLink]="['/master/company/']">
+            <a mat-raised-button [routerLink]="['/master/component/']">
               Back
             </a>
           </div>

@@ -138,7 +138,12 @@ const routes = [
     path: 'master/component/add',
     component: PayrollComponentDetailComponent,
     canActivate: [AuthGuard]
-  }
+  },
+  {
+    path: 'master/component/edit/:id',
+    component: PayrollComponentDetailComponent,
+    canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({

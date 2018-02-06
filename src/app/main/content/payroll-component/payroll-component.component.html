@@ -66,7 +66,7 @@
       <ngx-datatable-column name="Action" [width]="150" [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false">
         <ng-template let-row="row" ngx-datatable-cell-template>
           <div class="button-row">
-            <button mat-icon-button color="primary" [routerLink]="'/master/company/edit/' + row.id">
+            <button mat-icon-button color="primary" [routerLink]="'/master/component/edit/' + row.id">
               <mat-icon aria-label="Edit">edit</mat-icon>
             </button>
             <button mat-icon-button color="warn" (click)="deleteRow(row)">

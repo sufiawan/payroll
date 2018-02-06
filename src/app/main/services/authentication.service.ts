@@ -28,7 +28,7 @@ export class AuthenticationService {
     }
  
     login(username: string, password: string): Observable<boolean> {
-        return this.http.post('http://cryptic-citadel-16128.herokuapp.com/api-token-auth/', JSON.stringify({ username: username, password: password }), httpOptions)
+        return this.http.post('https://cryptic-citadel-16128.herokuapp.com/api-token-auth/', JSON.stringify({ username: username, password: password }), httpOptions)
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response
                 let token = response.json() && response.json().token;
