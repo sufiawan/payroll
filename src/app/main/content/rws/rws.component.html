@@ -1,0 +1,43 @@
+<div id="ngx-datatable" class="page-layout simple fullwidth" fusePerfectScrollbar>
+  <!-- HEADER -->
+  <div class="header mat-accent-bg p-24 h-80" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+      <div fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="column" fxLayoutAlign.gt-xs="center start">
+          <div class="black-fg" fxLayout="row" fxLayoutAlign="start center">
+              <mat-icon class="secondary-text s-16">home</mat-icon>
+              <mat-icon class="secondary-text s-16">chevron_right</mat-icon>
+              <span class="secondary-text">rw</span>
+          </div>
+          <div class="h2 mt-16">RW</div>
+      </div>
+  </div>
+  <!-- / HEADER -->
+
+  <!-- CONTENT -->  
+  <div class="content p-24">
+    <div class="button-row">
+      <button mat-raised-button color="accent"
+        (click)="openDialogDetail()">
+        Add New
+      </button>
+      <button mat-raised-button color="accent"
+        (click)="openDialogDetailEdit()">
+        Edit
+      </button>
+      <button mat-raised-button color="warn"
+        (click)="openDialogDetailDelete()">
+        Delete
+      </button>
+    </div>
+    <ngx-datatable class="material"
+      [rows]="rows"
+      [columns]="columns"
+      [selected]="selected"
+      [selectionType]="'single'"
+      [loadingIndicator]="loadingIndicator"
+      [columnMode]="'force'"
+      [rowHeight]="'auto'"
+      [scrollbarH]="true"
+      (select)='onSelect($event)'>
+    </ngx-datatable>
+  </div>
+</div>

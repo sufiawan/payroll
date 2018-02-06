@@ -1,0 +1,80 @@
+<div id="payroll-component" class="page-layout simple fullwidth" fusePerfectScrollbar>
+
+  <!-- HEADER -->
+  <div class="header mat-accent-bg p-24 h-160" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+
+    <div fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="column" fxLayoutAlign.gt-xs="center start">
+
+      <!-- APP TITLE -->
+      <div class="logo my-12 m-sm-0" fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon class="logo-icon mr-16" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">business</mat-icon>
+        <span class="logo-text h1" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">Payroll Component List</span>
+      </div>
+      <!-- / APP TITLE -->
+    </div>
+
+    <button mat-raised-button [routerLink]="'/master/component/add'" class="add-product-button mat-white-bg my-12 mt-sm-0">
+      <span>Add New</span>
+    </button>
+
+  </div>
+  <!-- / HEADER -->
+
+  <div class="content p-24">
+    <ngx-datatable class="material" [rows]="payCompts" [limit]="10" [columnMode]="'force'" [rowHeight]="'auto'" [scrollbarH]="true"
+      [footerHeight]="50" [loadingIndicator]="loadingIndicator">
+      <ngx-datatable-column name="#" [width]="30" [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false">
+        <ng-template let-rowIndex="rowIndex" ngx-datatable-cell-template>
+          {{rowIndex + 1}}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Component Code" prop="componentCd"></ngx-datatable-column>
+      <ngx-datatable-column name="Name"></ngx-datatable-column>
+      <ngx-datatable-column name="Calculation Type" prop="intervalTypeDescs"></ngx-datatable-column>
+      <!-- <ngx-datatable-column name="Taxable" prop="tax"></ngx-datatable-column> -->
+
+      <ngx-datatable-column name="Taxable" prop="tax">
+        <ng-template ngx-datatable-cell-template let-value="value">
+          <mat-checkbox [checked]="value" [disabled]="true"></mat-checkbox>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <!-- <ngx-datatable-column name="Absent Deduction" prop="absentDeduct"></ngx-datatable-column> -->
+
+      <ngx-datatable-column name="Absent Deduction" prop="absentDeduct">
+        <ng-template ngx-datatable-cell-template let-value="value">
+          <mat-checkbox [checked]="value" [disabled]="true"></mat-checkbox>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <!-- <ngx-datatable-column name="Payroll Deduction" prop="payrollDeduct"></ngx-datatable-column> -->
+
+      <ngx-datatable-column name="Payroll Deduction" prop="payrollDeduct">
+        <ng-template ngx-datatable-cell-template let-value="value">
+          <mat-checkbox [checked]="value" [disabled]="true"></mat-checkbox>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <!-- <ngx-datatable-column name="Company Subsidize" prop="compSubsidize"></ngx-datatable-column> -->
+      
+      <ngx-datatable-column name="Company Subsidize" prop="compSubsidize">
+        <ng-template ngx-datatable-cell-template let-value="value">
+          <mat-checkbox [checked]="value" [disabled]="true"></mat-checkbox>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="Action" [width]="150" [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <div class="button-row">
+            <button mat-icon-button color="primary" [routerLink]="'/master/company/edit/' + row.id">
+              <mat-icon aria-label="Edit">edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteRow(row)">
+              <mat-icon aria-label="Delete">delete</mat-icon>
+            </button>
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+  </div>
+</div>
