@@ -13,17 +13,27 @@ import { PayrollComponentDetail } from '../../models/payroll-component-detail';
 })
 export class PayrollComponentDetailComponent implements OnInit {
 
-  form: FormGroup;
+  form: FormGroup; k
   formErrors: any;
   payCompt: PayrollComponent = {
-    id: 0, componentCd: '', name: '', intervalType: '', intervalTypeDescs: '',
+    id: 0, componentCd: '', name: '', calcType: '', calcTypeDescs: '',
     tax: false, absentDeduct: false, payrollDeduct: false, compSubsidize: false, proRate: null, payrollComponentDtls: null
   };
   sub: any;
   isProRate: boolean = false;
   exDtl: PayrollComponentDetail[];
+  dummyDtl: PayrollComponentDetail[] = [
+    {
+      calcType: 'A',
+      calcTypeDescs: '',
+      companyVal: 1,
+      descs: 'asdsad',
+      employeeVAl: 1,
+      maxSalaryCalc: 1
+    }
+  ];
 
-  intervalTypeOption = [
+  calcTypeOption = [
     { value: 'D', display_name: 'Daily' },
     { value: 'W', display_name: 'Weekly' },
     { value: 'M', display_name: 'Monthly' },
@@ -40,7 +50,7 @@ export class PayrollComponentDetailComponent implements OnInit {
     this.formErrors = {
       componentCd: {},
       name: {},
-      intervalType: {},
+      calcType: {},
     };
 
     this.proRateSvc.getProrates().subscribe(res => this.proRateOption = res);
@@ -52,7 +62,7 @@ export class PayrollComponentDetailComponent implements OnInit {
       id: [this.payCompt.id],
       componentCd: [this.payCompt.componentCd, [Validators.required, Validators.maxLength(10)]],
       name: [this.payCompt.name, Validators.required],
-      intervalType: [this.payCompt.intervalType, Validators.required],
+      calcType: [this.payCompt.calcType, Validators.required],
       tax: this.payCompt.tax,
       absentDeduct: this.payCompt.absentDeduct,
       payrollDeduct: this.payCompt.payrollDeduct,
@@ -71,7 +81,7 @@ export class PayrollComponentDetailComponent implements OnInit {
               id: this.payCompt.id,
               componentCd: this.payCompt.componentCd,
               name: this.payCompt.name,
-              intervalType: this.payCompt.intervalType,
+              calcType: this.payCompt.calcType,
               tax: this.payCompt.tax,
               absentDeduct: this.payCompt.absentDeduct,
               payrollDeduct: this.payCompt.payrollDeduct,
@@ -106,8 +116,9 @@ export class PayrollComponentDetailComponent implements OnInit {
         payCompt.proRate = null;
 
       payCompt.payrollComponentDtls = this.exDtl;
-      
+
       if (payCompt.id === 0) {
+        payCompt.payrollComponentDtls = this.dummyDtl;
         this.payComptSvc.addPayrollComponent(payCompt).subscribe();
       } else {
         this.payComptSvc.updatePayrollComponent(payCompt).subscribe();

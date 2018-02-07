@@ -47,8 +47,8 @@
 
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
           <mat-form-field fxFlex="100">
-            <mat-select placeholder="Calculation Type" formControlName="intervalType" required>
-              <mat-option *ngFor="let item of intervalTypeOption" [value]="item.value">
+            <mat-select placeholder="Calculation Type" formControlName="calcType" required>
+              <mat-option *ngFor="let item of calcTypeOption" [value]="item.value">
                 {{ item.display_name }}
               </mat-option>
             </mat-select>

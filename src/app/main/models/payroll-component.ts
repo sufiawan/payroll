@@ -5,8 +5,8 @@ export interface PayrollComponent {
     id: number;
     componentCd: string;
     name: string;
-    intervalType: string;
-    intervalTypeDescs: string;    
+    calcType: string;
+    calcTypeDescs: string;    
     tax: boolean;
     absentDeduct: boolean;
     payrollDeduct: boolean;
