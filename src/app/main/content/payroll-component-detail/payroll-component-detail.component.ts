@@ -5,6 +5,7 @@ import { PayrollComponentService } from '../../services/payroll-component.servic
 import { ActivatedRoute } from '@angular/router';
 import { ProrateService } from '../../services/prorate.service';
 import { PayrollComponentDetail } from '../../models/payroll-component-detail';
+import { FormControl } from '@angular/forms/src/model';
 
 @Component({
   selector: 'app-payroll-component-detail',
@@ -13,30 +14,46 @@ import { PayrollComponentDetail } from '../../models/payroll-component-detail';
 })
 export class PayrollComponentDetailComponent implements OnInit {
 
-  form: FormGroup; k
+  form: FormGroup;
+  formDetail: FormGroup;
   formErrors: any;
+  formErrorsDetail: any;
+
   payCompt: PayrollComponent = {
     id: 0, componentCd: '', name: '', calcType: '', calcTypeDescs: '',
     tax: false, absentDeduct: false, payrollDeduct: false, compSubsidize: false, proRate: null, payrollComponentDtls: null
   };
+
   sub: any;
-  isProRate: boolean = false;
+  loadingbar: boolean = true;
+
+  addedDetail: PayrollComponentDetail[];
+  deletedDetail: PayrollComponentDetail[];
+  
   exDtl: PayrollComponentDetail[];
   dummyDtl: PayrollComponentDetail[] = [
     {
+      id: 0,
       calcType: 'A',
       calcTypeDescs: '',
       companyVal: 1,
       descs: 'asdsad',
       employeeVAl: 1,
-      maxSalaryCalc: 1
+      maxSalaryCalc: 1      
     }
   ];
+  
+  //dtl_descs = new FormControl('', Validators.required);
 
   calcTypeOption = [
     { value: 'D', display_name: 'Daily' },
     { value: 'W', display_name: 'Weekly' },
     { value: 'M', display_name: 'Monthly' },
+  ];
+
+  calcTypeDetailOption = [
+    { value: 'A', display_name: 'Fixed Amount' },
+    { value: 'P', display_name: 'Percentage (%)' },    
   ];
 
   proRateOption = [];
@@ -47,10 +64,20 @@ export class PayrollComponentDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder
   ) {
+
     this.formErrors = {
       componentCd: {},
       name: {},
       calcType: {},
+      dtl_descs: {}
+    };
+
+    this.formErrorsDetail = {
+      descs: {},
+      calcType: {},
+      maxSalaryCalc: {},
+      employeeVAl: {},
+      companyVal: {}
     };
 
     this.proRateSvc.getProrates().subscribe(res => this.proRateOption = res);
@@ -67,12 +94,21 @@ export class PayrollComponentDetailComponent implements OnInit {
       absentDeduct: this.payCompt.absentDeduct,
       payrollDeduct: this.payCompt.payrollDeduct,
       compSubsidize: this.payCompt.compSubsidize,
-      proRate: [{ value: this.payCompt.proRate, disabled: true }]
+      proRate: this.payCompt.proRate
+    });
+
+    this.formDetail = this.formBuilder.group({      
+      descs: ['', Validators.required],
+      calcType: ['', Validators.required],
+      maxSalaryCalc: ['', Validators.required],
+      employeeVAl: ['', Validators.required],
+      companyVal: ['', Validators.required],
     });
 
     this.sub = this.route.params.subscribe(params => {
       let id = Number.parseInt(params['id']);
       if (id) {
+        this.loadingbar = false;
         this.payComptSvc.getPayrollComponent(id)
           .subscribe(res => {
             this.payCompt = res;
@@ -91,10 +127,7 @@ export class PayrollComponentDetailComponent implements OnInit {
 
             this.exDtl = res.payrollComponentDtls;
 
-            if (this.payCompt.proRate != null) {
-              this.isProRate = true;
-              this.onChecked(true);
-            }
+            this.loadingbar = true;
           }
           );
       }
@@ -111,10 +144,7 @@ export class PayrollComponentDetailComponent implements OnInit {
   }
 
   onSubmit(payCompt: PayrollComponent) {
-    if (this.form.valid) {
-      if (!this.isProRate)
-        payCompt.proRate = null;
-
+    if (this.form.valid) {      
       payCompt.payrollComponentDtls = this.exDtl;
 
       if (payCompt.id === 0) {
@@ -124,6 +154,10 @@ export class PayrollComponentDetailComponent implements OnInit {
         this.payComptSvc.updatePayrollComponent(payCompt).subscribe();
       }
     }
+  }
+
+  onSubmitDetail(payComptDetail: PayrollComponentDetail) {
+
   }
 
   onFormValuesChanged() {
@@ -142,13 +176,6 @@ export class PayrollComponentDetailComponent implements OnInit {
         this.formErrors[field] = control.errors;
       }
     }
-  }
-
-  onChecked(val: boolean) {
-    if (val)
-      this.form.get('proRate').enable();
-    else
-      this.form.get('proRate').disable();
   }
 
 }
