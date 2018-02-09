@@ -25,11 +25,12 @@ export class PayrollComponentDetailComponent implements OnInit {
   };
 
   sub: any;
+  temp: any[] = [];
   loadingbar: boolean = true;
 
-  addedDetail: PayrollComponentDetail[];
-  deletedDetail: PayrollComponentDetail[];
-  
+  addedDetail: PayrollComponentDetail[] = [];
+  deletedDetail: PayrollComponentDetail[] = [];
+    
   exDtl: PayrollComponentDetail[];
   dummyDtl: PayrollComponentDetail[] = [
     {
@@ -43,8 +44,6 @@ export class PayrollComponentDetailComponent implements OnInit {
     }
   ];
   
-  //dtl_descs = new FormControl('', Validators.required);
-
   calcTypeOption = [
     { value: 'D', display_name: 'Daily' },
     { value: 'W', display_name: 'Weekly' },
@@ -54,6 +53,14 @@ export class PayrollComponentDetailComponent implements OnInit {
   calcTypeDetailOption = [
     { value: 'A', display_name: 'Fixed Amount' },
     { value: 'P', display_name: 'Percentage (%)' },    
+  ];
+
+  columns = [    
+    { prop: 'descs', name: 'Description' },
+    { prop: 'calcTypeDescs', name: 'Calculation Type' },
+    { prop: 'maxSalaryCalc', name: 'Max Calculated Salary' },
+    { prop: 'employeeVAl', name: 'Employee Value' },
+    { prop: 'companyVal', name: 'Company Value' }
   ];
 
   proRateOption = [];
@@ -81,6 +88,8 @@ export class PayrollComponentDetailComponent implements OnInit {
     };
 
     this.proRateSvc.getProrates().subscribe(res => this.proRateOption = res);
+
+    this.temp = [...this.addedDetail];
   }
 
   ngOnInit() {
@@ -97,7 +106,8 @@ export class PayrollComponentDetailComponent implements OnInit {
       proRate: this.payCompt.proRate
     });
 
-    this.formDetail = this.formBuilder.group({      
+    this.formDetail = this.formBuilder.group({
+      id: '',
       descs: ['', Validators.required],
       calcType: ['', Validators.required],
       maxSalaryCalc: ['', Validators.required],
@@ -148,7 +158,7 @@ export class PayrollComponentDetailComponent implements OnInit {
       payCompt.payrollComponentDtls = this.exDtl;
 
       if (payCompt.id === 0) {
-        payCompt.payrollComponentDtls = this.dummyDtl;
+        payCompt.payrollComponentDtls = this.addedDetail;
         this.payComptSvc.addPayrollComponent(payCompt).subscribe();
       } else {
         this.payComptSvc.updatePayrollComponent(payCompt).subscribe();
@@ -157,7 +167,10 @@ export class PayrollComponentDetailComponent implements OnInit {
   }
 
   onSubmitDetail(payComptDetail: PayrollComponentDetail) {
-
+    payComptDetail.calcTypeDescs = this.calcTypeDetailOption.find(x => x.value == payComptDetail.calcType).display_name;
+    //this.addedDetail.push(payComptDetail);
+    this.addedDetail.splice(0, 0, payComptDetail);
+    this.formDetail.reset();
   }
 
   onFormValuesChanged() {
