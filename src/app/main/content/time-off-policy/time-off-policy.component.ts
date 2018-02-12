@@ -11,13 +11,17 @@ import { TimeOffPolicyService } from '../../services/time-off-policy.service';
 })
 export class TimeOffPolicyComponent implements OnInit {
   rowsData: TimeOffPolicy[];
+  loadingIndicator: boolean = true;
 
   constructor(
     private timeOffSvc: TimeOffPolicyService
   ) { }
 
   ngOnInit() {
-    this.timeOffSvc.getList().subscribe(res => this.rowsData = res );
+    this.timeOffSvc.getList().subscribe(res => {
+      this.rowsData = res;
+      this.loadingIndicator = false;
+     });
   }
 
   deleteRow(timeOff: TimeOffPolicy): void {
