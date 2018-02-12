@@ -15,6 +15,7 @@ export class JobPositionDetailComponent implements OnInit {
   formErrors: any;
   jobPos: JobPosition = { id: 0, positionCd: '', name: '' };
   sub: any;
+  loadingbar: boolean = true;
 
   constructor(
     private jobPosSvc: JobPositionService,
@@ -39,6 +40,8 @@ export class JobPositionDetailComponent implements OnInit {
     this.sub = this.route.params.subscribe(params => {
       let id = Number.parseInt(params['id']);
       if (id) {
+        this.loadingbar = false;
+
         this.jobPosSvc.getJobPosition(id)
           .subscribe(res => {
             this.jobPos = res;
@@ -47,9 +50,10 @@ export class JobPositionDetailComponent implements OnInit {
               id: this.jobPos.id,
               positionCd: this.jobPos.positionCd,
               name: this.jobPos.name
-            })
-          }
-          );
+            });
+
+            this.loadingbar = true;
+          });
       }
     });
 
@@ -64,10 +68,11 @@ export class JobPositionDetailComponent implements OnInit {
 
   onSubmit(jobPos: JobPosition) {
     if (this.form.valid) {
-      if (jobPos.id == 0)
+      if (jobPos.id == 0) {
         this.jobPosSvc.addJobPosition(jobPos).subscribe();
-      else
+      } else {
         this.jobPosSvc.updateJobPosition(jobPos).subscribe();
+      }
     }
   }
 

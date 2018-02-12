@@ -8,12 +8,12 @@
       <!-- APP TITLE -->
       <div class="logo my-12 m-sm-0" fxLayout="row" fxLayoutAlign="start center">
         <mat-icon class="logo-icon mr-16" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">business</mat-icon>
-        <span class="logo-text h1" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">Division List</span>
+        <span class="logo-text h1" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">Time Off Policy List</span>
       </div>
       <!-- / APP TITLE -->
     </div>
 
-    <button mat-raised-button [routerLink]="'/master/division/add'" class="add-product-button mat-white-bg my-12 mt-sm-0">
+    <button mat-raised-button [routerLink]="'/master/timeoffpolicy/add'" class="add-product-button mat-white-bg my-12 mt-sm-0">
       <span>Add New</span>
     </button>
 
@@ -21,20 +21,21 @@
   <!-- / HEADER -->
 
   <div class="content p-24">
-    <ngx-datatable class="material" [rows]="divisions" [limit]="10" [columnMode]="'force'" [rowHeight]="'auto'" [scrollbarH]="true"
+    <ngx-datatable class="material" [rows]="rowsData" [limit]="10" [columnMode]="'force'" [rowHeight]="'auto'" [scrollbarH]="true"
       [footerHeight]="50" [loadingIndicator]="loadingIndicator">
       <ngx-datatable-column name="#" [width]="30" [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false">
         <ng-template let-rowIndex="rowIndex" ngx-datatable-cell-template>
           {{rowIndex + 1}}
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="Division Code" prop="divisionCd"></ngx-datatable-column>
+      <ngx-datatable-column name="Time Off Code" prop="timeOffCd"></ngx-datatable-column>
       <ngx-datatable-column name="Name"></ngx-datatable-column>
-      <ngx-datatable-column name="Description" prop="descs"></ngx-datatable-column>
+      <ngx-datatable-column name="Reset By" prop="resetByDescs"></ngx-datatable-column>
+      <ngx-datatable-column name="Time Off Value" prop="timeOffVal"></ngx-datatable-column>
       <ngx-datatable-column name="Action" [width]="150" [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false">
         <ng-template let-row="row" ngx-datatable-cell-template>
           <div class="button-row">
-            <button mat-icon-button color="primary" [routerLink]="'/master/division/edit/' + row.id">
+            <button mat-icon-button color="primary" [routerLink]="'/master/timeoffpolicy/edit/' + row.id">
               <mat-icon aria-label="Edit">edit</mat-icon>
             </button>
             <button mat-icon-button color="warn" (click)="deleteRow(row)">

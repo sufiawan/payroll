@@ -30,6 +30,7 @@ import { JobPositionService } from './services/job-position.service';
 import { JobLevelService } from './services/job-level.service';
 import { ProrateService } from './services/prorate.service';
 import { PayrollComponentService } from './services/payroll-component.service';
+import { TimeOffPolicyService } from './services/time-off-policy.service';
 
 @NgModule({
     declarations: [
@@ -67,7 +68,8 @@ import { PayrollComponentService } from './services/payroll-component.service';
         JobPositionService,
         JobLevelService,
         ProrateService,
-        PayrollComponentService
+        PayrollComponentService,
+        TimeOffPolicyService
     ],
 })
 

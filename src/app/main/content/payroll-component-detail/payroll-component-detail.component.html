@@ -168,7 +168,7 @@
             </mat-form-field>
 
           </div>
-          
+
           <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 1 auto">
             <div class="button-row" style="margin-bottom:25px">
               <button mat-raised-button class="mat-accent" type="submit">
@@ -176,11 +176,32 @@
               </button>
             </div>
           </div>
-          <ngx-datatable class="material" [columns]="columns" [rows]="addedDetail" [limit]="10" [columnMode]="'force'" [rowHeight]="'auto'" [scrollbarH]="true"
-      [footerHeight]="50">
-      </ngx-datatable>
+          <ngx-datatable class="material" [rows]="payComptDetail" [limit]="10" [columnMode]="'force'" [rowHeight]="'auto'"
+            [scrollbarH]="true" [footerHeight]="50">
 
-        </form>        
+            <ngx-datatable-column name="#" [width]="30" [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false">
+              <ng-template let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                {{rowIndex + 1}}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop='descs' name='Description'></ngx-datatable-column>
+            <ngx-datatable-column prop='calcTypeDescs' name='Calculation Type'></ngx-datatable-column>
+            <ngx-datatable-column prop='maxSalaryCalc' name='Max Calculated Salary'></ngx-datatable-column>
+            <ngx-datatable-column prop='employeeVAl' name='Employee Value'></ngx-datatable-column>
+            <ngx-datatable-column prop='companyVal' name='Company Value'></ngx-datatable-column>
+
+            <ngx-datatable-column name="Action" [width]="150" [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <div class="button-row">
+                  <button mat-icon-button color="warn" (click)="deleteDetail(row)">
+                    <mat-icon aria-label="Delete">delete</mat-icon>
+                  </button>
+                </div>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+
+        </form>
       </mat-tab>
     </mat-tab-group>
   </div>

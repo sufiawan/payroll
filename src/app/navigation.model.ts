@@ -58,6 +58,12 @@ export class NavigationModel
                                 'title': 'Component',
                                 'type': 'item',
                                 'url': '/master/component'
+                            },
+                            {
+                                'id': 'timeoffpolicy',
+                                'title': 'Time Off Policy',
+                                'type': 'item',
+                                'url': '/master/timeoffpolicy'
                             }
                         ]
                     }

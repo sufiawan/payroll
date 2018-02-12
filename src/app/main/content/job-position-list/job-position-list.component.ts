@@ -7,7 +7,7 @@ import { JobPositionService } from '../../services/job-position.service';
   selector: 'app-job-position-list',
   templateUrl: './job-position-list.component.html',
   styleUrls: ['./job-position-list.component.scss'],
-  animations : fuseAnimations
+  animations: fuseAnimations
 })
 export class JobPositionListComponent implements OnInit {
 
@@ -30,8 +30,11 @@ export class JobPositionListComponent implements OnInit {
   }
 
   deleteRow(jobpos: JobPosition): void {
-    this.jobposSvc.deleteJobPosition(jobpos).subscribe();
-    this.retrieveJobPositions();
+    if (confirm('Are you sure want to delete?')) {
+      this.jobposSvc.deleteJobPosition(jobpos).subscribe(res => {
+        this.jobpositions.splice(this.jobpositions.indexOf(jobpos), 1);
+      });
+    }
   }
 
 }

@@ -7,7 +7,7 @@ import { JobLevelService } from '../../services/job-level.service';
   selector: 'app-job-level-list',
   templateUrl: './job-level-list.component.html',
   styleUrls: ['./job-level-list.component.scss'],
-  animations : fuseAnimations
+  animations: fuseAnimations
 })
 export class JobLevelListComponent implements OnInit {
 
@@ -30,8 +30,11 @@ export class JobLevelListComponent implements OnInit {
   }
 
   deleteRow(joblevel: JobLevel): void {
-    this.joblevelSvc.deleteJobLevel(joblevel).subscribe();
-    this.retrieveJobLevels();
+    if (confirm('Are you sure want to delete?')) {
+      this.joblevelSvc.deleteJobLevel(joblevel).subscribe(res => {
+        this.joblevels.splice(this.joblevels.indexOf(joblevel), 1);
+      });
+    }
   }
 
 }

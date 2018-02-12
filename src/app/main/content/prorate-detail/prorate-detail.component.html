@@ -12,7 +12,9 @@
     </div>
   </div>
   <!-- / HEADER -->
-
+  <div class="content">
+    <mat-progress-bar mode="indeterminate" [hidden]="loadingbar"></mat-progress-bar>
+  </div>
   <!-- CONTENT -->
   <div class="content p-24">
 
@@ -87,7 +89,7 @@
             </button>
             <a mat-raised-button [routerLink]="['/master/prorate/']">
               Back
-            </a>            
+            </a>
           </div>
         </div>
 

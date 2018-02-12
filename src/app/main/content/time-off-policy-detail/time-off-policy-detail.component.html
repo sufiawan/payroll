@@ -2,8 +2,8 @@
 
   <!-- HEADER -->
   <div class="header mat-accent-bg p-24 h-160" fxLayout="row" fxLayoutAlign="start center">
-    <div fxLayout="column" fxLayoutAlign="center start">      
-      <div class="h1 mt-16">Company</div>
+    <div fxLayout="column" fxLayoutAlign="center start">
+      <div class="h1 mt-16">Time Off Policy</div>
     </div>
   </div>
   <!-- / HEADER -->
@@ -23,9 +23,9 @@
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
 
           <mat-form-field fxFlex="50">
-            <input matInput placeholder="Company Code" formControlName="companyCd" required>
-            <mat-error *ngIf="formErrors.companyCd.required">
-              Company Code is required!
+            <input matInput placeholder="Time Off Policy Code" formControlName="timeOffCd" required>
+            <mat-error *ngIf="formErrors.timeOffCd.required">
+              Time Off Policy Code is required!
             </mat-error>
           </mat-form-field>
 
@@ -34,10 +34,28 @@
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
 
           <mat-form-field fxFlex="100">
-            <input matInput placeholder="Company Name" formControlName="name" required>
+            <input matInput placeholder="Time Off Policy Name" formControlName="name" required>
             <mat-error *ngIf="formErrors.name.required">
-              Company Name is required!
+              Time Off Policy Name is required!
             </mat-error>
+          </mat-form-field>
+
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+          <mat-form-field fxFlex="100">
+            <mat-select placeholder="Reset By" formControlName="resetBy" required>
+              <mat-option *ngFor="let item of resetByOption" [value]="item.value">
+                {{ item.display_name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+          <mat-form-field fxFlex="100">
+            <input matInput type="date" placeholder="Custom Date" formControlName="customDate" required>
           </mat-form-field>
 
         </div>
@@ -45,9 +63,9 @@
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
 
           <mat-form-field fxFlex="100">
-            <input matInput placeholder="Location" formControlName="location" required>
-            <mat-error *ngIf="formErrors.location.required">
-              Location is required!
+            <input matInput type="number" placeholder="Time Off Value" formControlName="timeOffVal" required>
+            <mat-error *ngIf="formErrors.timeOffVal.required">
+              Time Off Value is required!
             </mat-error>
           </mat-form-field>
 
@@ -57,7 +75,7 @@
             <button mat-raised-button class="mat-accent" type="submit">
               Submit
             </button>
-            <a mat-raised-button [routerLink]="['/master/company/']">
+            <a mat-raised-button [routerLink]="['/master/timeoffpolicy/']">
               Back
             </a>
           </div>

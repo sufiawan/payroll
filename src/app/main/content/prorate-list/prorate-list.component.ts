@@ -7,7 +7,7 @@ import { fuseAnimations } from '../../../core/animations';
   selector: 'app-prorate-list',
   templateUrl: './prorate-list.component.html',
   styleUrls: ['./prorate-list.component.scss'],
-  animations : fuseAnimations
+  animations: fuseAnimations
 })
 export class ProrateListComponent implements OnInit {
 
@@ -15,10 +15,10 @@ export class ProrateListComponent implements OnInit {
   loadingIndicator: boolean = true;
 
   constructor(
-    private prorateSvc: ProrateService    
+    private prorateSvc: ProrateService
   ) { }
 
-  ngOnInit() {    
+  ngOnInit() {
     this.retrieveList();
   }
 
@@ -30,8 +30,11 @@ export class ProrateListComponent implements OnInit {
   }
 
   deleteRow(proRate: Prorate): void {
-    this.prorateSvc.deleteProrate(proRate).subscribe();
-    this.retrieveList();
+    if (confirm('Are you sure want to delete?')) {
+      this.prorateSvc.deleteProrate(proRate).subscribe(res => {
+        this.proRates.splice(this.proRates.indexOf(proRate), 1);
+      });
+    }
   }
 
 }

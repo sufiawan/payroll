@@ -15,6 +15,7 @@ export class DivisionDetailComponent implements OnInit {
   formErrors: any;
   div: Division = { id: 0, divisionCd: '', name: '', descs: '' };
   sub: any;
+  loadingbar: boolean = true;
 
   constructor(
     private divSvc: DivisionService,
@@ -41,6 +42,8 @@ export class DivisionDetailComponent implements OnInit {
     this.sub = this.route.params.subscribe(params => {
       let id = Number.parseInt(params['id']);
       if (id) {
+        this.loadingbar = false;
+
         this.divSvc.getDivision(id)
           .subscribe(res => {
             this.div = res;
@@ -50,9 +53,10 @@ export class DivisionDetailComponent implements OnInit {
               divisionCd: this.div.divisionCd,
               name: this.div.name,
               descs: this.div.descs
-            })
-          }
-          );
+            });
+            
+            this.loadingbar = true;
+          });
       }
     });
 
@@ -67,10 +71,11 @@ export class DivisionDetailComponent implements OnInit {
 
   onSubmit(div: Division) {
     if (this.form.valid) {
-      if (div.id == 0)
+      if (div.id == 0) {
         this.divSvc.addDivision(div).subscribe()
-      else
+      } else {
         this.divSvc.updateDivision(div).subscribe();
+      }
     }
   }
 

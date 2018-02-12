@@ -15,6 +15,7 @@ export class CompanyDetailComponent implements OnInit {
   formErrors: any;
   comp: Company = { id: 0, companyCd: '', name: '', location: '' };
   sub: any;
+  loadingbar: boolean = true;
 
   constructor(
     private companySvc: CompanyService,
@@ -41,6 +42,8 @@ export class CompanyDetailComponent implements OnInit {
     this.sub = this.route.params.subscribe(params => {
       let id = Number.parseInt(params['id']);
       if (id) {
+        this.loadingbar = false;
+
         this.companySvc.getCompany(id)
           .subscribe(res => {
             this.comp = res;
@@ -51,8 +54,9 @@ export class CompanyDetailComponent implements OnInit {
               name: this.comp.name,
               location: this.comp.location
             });
-          }
-          );
+
+            this.loadingbar = true;
+          });
       }
     });
 

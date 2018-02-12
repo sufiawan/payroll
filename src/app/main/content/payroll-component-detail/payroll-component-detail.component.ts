@@ -24,25 +24,10 @@ export class PayrollComponentDetailComponent implements OnInit {
     tax: false, absentDeduct: false, payrollDeduct: false, compSubsidize: false, proRate: null, payrollComponentDtls: null
   };
 
-  sub: any;
-  temp: any[] = [];
+  sub: any;  
   loadingbar: boolean = true;
 
-  addedDetail: PayrollComponentDetail[] = [];
-  deletedDetail: PayrollComponentDetail[] = [];
-    
-  exDtl: PayrollComponentDetail[];
-  dummyDtl: PayrollComponentDetail[] = [
-    {
-      id: 0,
-      calcType: 'A',
-      calcTypeDescs: '',
-      companyVal: 1,
-      descs: 'asdsad',
-      employeeVAl: 1,
-      maxSalaryCalc: 1      
-    }
-  ];
+  payComptDetail: PayrollComponentDetail[] = [];
   
   calcTypeOption = [
     { value: 'D', display_name: 'Daily' },
@@ -53,14 +38,6 @@ export class PayrollComponentDetailComponent implements OnInit {
   calcTypeDetailOption = [
     { value: 'A', display_name: 'Fixed Amount' },
     { value: 'P', display_name: 'Percentage (%)' },    
-  ];
-
-  columns = [    
-    { prop: 'descs', name: 'Description' },
-    { prop: 'calcTypeDescs', name: 'Calculation Type' },
-    { prop: 'maxSalaryCalc', name: 'Max Calculated Salary' },
-    { prop: 'employeeVAl', name: 'Employee Value' },
-    { prop: 'companyVal', name: 'Company Value' }
   ];
 
   proRateOption = [];
@@ -87,9 +64,7 @@ export class PayrollComponentDetailComponent implements OnInit {
       companyVal: {}
     };
 
-    this.proRateSvc.getProrates().subscribe(res => this.proRateOption = res);
-
-    this.temp = [...this.addedDetail];
+    this.proRateSvc.getProrates().subscribe(res => this.proRateOption = res);    
   }
 
   ngOnInit() {
@@ -135,7 +110,7 @@ export class PayrollComponentDetailComponent implements OnInit {
               proRate: this.payCompt.proRate
             });
 
-            this.exDtl = res.payrollComponentDtls;
+            this.payComptDetail = res.payrollComponentDtls;
 
             this.loadingbar = true;
           }
@@ -154,23 +129,30 @@ export class PayrollComponentDetailComponent implements OnInit {
   }
 
   onSubmit(payCompt: PayrollComponent) {
-    if (this.form.valid) {      
-      payCompt.payrollComponentDtls = this.exDtl;
+    if (this.form.valid) {
+      if (this.payComptDetail.length > 0) {
 
-      if (payCompt.id === 0) {
-        payCompt.payrollComponentDtls = this.addedDetail;
-        this.payComptSvc.addPayrollComponent(payCompt).subscribe();
+        payCompt.payrollComponentDtls = this.payComptDetail;
+
+        if (payCompt.id === 0) {
+          this.payComptSvc.addPayrollComponent(payCompt).subscribe();
+        } else {
+          this.payComptSvc.updatePayrollComponent(payCompt).subscribe();
+        }
       } else {
-        this.payComptSvc.updatePayrollComponent(payCompt).subscribe();
+        alert('Please fill Component Detail');
       }
     }
   }
 
   onSubmitDetail(payComptDetail: PayrollComponentDetail) {
     payComptDetail.calcTypeDescs = this.calcTypeDetailOption.find(x => x.value == payComptDetail.calcType).display_name;
-    //this.addedDetail.push(payComptDetail);
-    this.addedDetail.splice(0, 0, payComptDetail);
-    this.formDetail.reset();
+    this.payComptDetail.push(payComptDetail);    
+    this.formDetail.reset();    
+  }
+
+  deleteDetail(dtl: PayrollComponentDetail) {
+    this.payComptDetail.splice(this.payComptDetail.indexOf(dtl), 1);
   }
 
   onFormValuesChanged() {

@@ -16,6 +16,7 @@ export class ProrateDetailComponent implements OnInit {
   proRate: Prorate = { id: 0, name: '', proRateCd: '', proRateDivider: '', proRateDivCus: 0, proRateVal: '' };
   sub: any;
   divVal = true;
+  loadingbar: boolean = true;
   
   proRateValueOption = [
     {value: 'W', display_name: 'Working Days'},
@@ -26,7 +27,7 @@ export class ProrateDetailComponent implements OnInit {
     {value: 'W', display_name: 'Working Days'},
     {value: 'C', display_name: 'Calendar Days'},
     {value: 'X', display_name: 'Custom'},
-  ]
+  ];
 
   constructor(
     private prorateSvc: ProrateService,
@@ -58,6 +59,8 @@ export class ProrateDetailComponent implements OnInit {
     this.sub = this.route.params.subscribe(params => {
       const id = Number.parseInt(params['id']);
       if (id) {
+        this.loadingbar = false;
+
         this.prorateSvc.getProrate(id)
           .subscribe(res => {
             this.proRate = res;
@@ -74,8 +77,9 @@ export class ProrateDetailComponent implements OnInit {
               proRateDivCus: this.proRate.proRateDivCus,
               proRateVal: this.proRate.proRateVal
             });
-          }
-          );
+
+            this.loadingbar = true;
+          });
       }
     });
 

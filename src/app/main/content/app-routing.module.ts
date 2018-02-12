@@ -21,6 +21,8 @@ import { ProrateListComponent } from './prorate-list/prorate-list.component';
 import { ProrateDetailComponent } from './prorate-detail/prorate-detail.component';
 import { PayrollComponentComponent } from './payroll-component/payroll-component.component';
 import { PayrollComponentDetailComponent } from './payroll-component-detail/payroll-component-detail.component';
+import { TimeOffPolicyComponent } from './time-off-policy/time-off-policy.component';
+import { TimeOffPolicyDetailComponent } from './time-off-policy-detail/time-off-policy-detail.component';
 
 const routes = [
   {
@@ -144,6 +146,22 @@ const routes = [
     component: PayrollComponentDetailComponent,
     canActivate: [AuthGuard]
   },
+  // Time Off
+  {
+    path: 'master/timeoffpolicy',
+    component: TimeOffPolicyComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'master/timeoffpolicy/add',
+    component: TimeOffPolicyDetailComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'master/timeoffpolicy/edit/:id',
+    component: TimeOffPolicyDetailComponent,
+    canActivate: [AuthGuard]
+  }
 ];
 
 @NgModule({
@@ -164,7 +182,9 @@ const routes = [
     ProrateListComponent,
     ProrateDetailComponent,
     PayrollComponentComponent,
-    PayrollComponentDetailComponent
+    PayrollComponentDetailComponent,
+    TimeOffPolicyComponent,
+    TimeOffPolicyDetailComponent
   ],
   imports: [
     SharedModule,

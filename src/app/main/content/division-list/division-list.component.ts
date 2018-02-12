@@ -7,7 +7,7 @@ import { DivisionService } from '../../services/division.service';
   selector: 'app-division-list',
   templateUrl: './division-list.component.html',
   styleUrls: ['./division-list.component.scss'],
-  animations : fuseAnimations
+  animations: fuseAnimations
 })
 export class DivisionListComponent implements OnInit {
 
@@ -30,8 +30,11 @@ export class DivisionListComponent implements OnInit {
   }
 
   deleteRow(div: Division): void {
-    this.divSvc.deleteDivision(div).subscribe();
-    this.retrieveDivisions();
+    if (confirm('Are you sure want to delete?')) {
+      this.divSvc.deleteDivision(div).subscribe(res => {
+        this.divisions.splice(this.divisions.indexOf(div), 1);
+      });
+    }
   }
 
 }

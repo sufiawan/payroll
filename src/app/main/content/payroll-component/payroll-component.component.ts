@@ -7,7 +7,7 @@ import { PayrollComponentService } from '../../services/payroll-component.servic
   selector: 'app-payroll-component',
   templateUrl: './payroll-component.component.html',
   styleUrls: ['./payroll-component.component.scss'],
-  animations : fuseAnimations
+  animations: fuseAnimations
 })
 export class PayrollComponentComponent implements OnInit {
 
@@ -27,6 +27,14 @@ export class PayrollComponentComponent implements OnInit {
       this.payCompts = res;
       this.loadingIndicator = false;
     });
+  }
+
+  deleteRow(payCompt: PayrollComponent): void {
+    if (confirm('Are you sure want to delete?')) {
+      this.payComptSvc.deletePayrollComponent(payCompt).subscribe(res => {
+        this.payCompts.splice(this.payCompts.indexOf(payCompt), 1);
+      });
+    }
   }
 
 }

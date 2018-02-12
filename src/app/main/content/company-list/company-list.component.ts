@@ -29,7 +29,10 @@ export class CompanyListComponent implements OnInit {
   }
 
   deleteRow(comp: Company): void {
-    this.companySvc.deleteCompany(comp).subscribe();
-    this.retrieveCompanies();
+    if (confirm('Are you sure want to delete?')) {
+      this.companySvc.deleteCompany(comp).subscribe(res => {
+        this.companies.splice(this.companies.indexOf(comp), 1);
+      });            
+    }      
   }
 }
