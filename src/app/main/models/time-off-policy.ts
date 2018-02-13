@@ -4,6 +4,6 @@ export interface TimeOffPolicy {
     name: string;
     resetBy: string;
     resetByDescs: string;
-    customDate: Date;
+    customDate: string;
     timeOffVal: number;    
 }

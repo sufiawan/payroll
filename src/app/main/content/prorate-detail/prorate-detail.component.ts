@@ -94,6 +94,7 @@ export class ProrateDetailComponent implements OnInit {
 
   onSubmit(proRate: Prorate) {
     if (this.form.valid) {
+      this.loadingbar = false;
 
       // ubah nilai custom ke 0 jika divider bukan opsi Custom
       if (proRate.proRateDivider !== 'X') {
@@ -101,10 +102,10 @@ export class ProrateDetailComponent implements OnInit {
       }
 
       if (proRate.id === 0) {
-        this.prorateSvc.addProrate(proRate).subscribe();
+        this.prorateSvc.addProrate(proRate).subscribe(res => { this.loadingbar = true; });
       }
       else {
-        this.prorateSvc.updateProrate(proRate).subscribe();
+        this.prorateSvc.updateProrate(proRate).subscribe(res => { this.loadingbar = true; });
       }
     }
   }

@@ -68,10 +68,12 @@ export class JobLevelDetailComponent implements OnInit {
 
   onSubmit(jobLvl: JobLevel) {
     if (this.form.valid) {
+      this.loadingbar = false;
+
       if (jobLvl.id == 0)
-        this.jobLvlSvc.addJobLevel(jobLvl).subscribe();
+        this.jobLvlSvc.addJobLevel(jobLvl).subscribe(res => { this.loadingbar = true; });
       else
-        this.jobLvlSvc.updateJobLevel(jobLvl).subscribe();
+        this.jobLvlSvc.updateJobLevel(jobLvl).subscribe(res => { this.loadingbar = true; });
     }
   }
 

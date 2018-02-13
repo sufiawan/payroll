@@ -71,10 +71,12 @@ export class DivisionDetailComponent implements OnInit {
 
   onSubmit(div: Division) {
     if (this.form.valid) {
+      this.loadingbar = false;
+
       if (div.id == 0) {
-        this.divSvc.addDivision(div).subscribe()
+        this.divSvc.addDivision(div).subscribe(res => { this.loadingbar = true; })
       } else {
-        this.divSvc.updateDivision(div).subscribe();
+        this.divSvc.updateDivision(div).subscribe(res => { this.loadingbar = true; });
       }
     }
   }

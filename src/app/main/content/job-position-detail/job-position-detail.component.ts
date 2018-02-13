@@ -68,10 +68,12 @@ export class JobPositionDetailComponent implements OnInit {
 
   onSubmit(jobPos: JobPosition) {
     if (this.form.valid) {
+      this.loadingbar = false;
+
       if (jobPos.id == 0) {
-        this.jobPosSvc.addJobPosition(jobPos).subscribe();
+        this.jobPosSvc.addJobPosition(jobPos).subscribe(res => { this.loadingbar = true; });
       } else {
-        this.jobPosSvc.updateJobPosition(jobPos).subscribe();
+        this.jobPosSvc.updateJobPosition(jobPos).subscribe(res => { this.loadingbar = true; });
       }
     }
   }

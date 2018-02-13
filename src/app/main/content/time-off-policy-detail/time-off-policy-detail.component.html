@@ -44,20 +44,30 @@
 
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
           <mat-form-field fxFlex="100">
-            <mat-select placeholder="Reset By" formControlName="resetBy" required>
+            <mat-select placeholder="Reset By" formControlName="resetBy" (change)="onResetByChange($event.value)" required>
               <mat-option *ngFor="let item of resetByOption" [value]="item.value">
                 {{ item.display_name }}
               </mat-option>
             </mat-select>
           </mat-form-field>
-        </div>
+        </div>        
 
-        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-
-          <mat-form-field fxFlex="100">
-            <input matInput type="date" placeholder="Custom Date" formControlName="customDate" required>
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" [hidden]="resetByVal">
+          <mat-form-field fxFlex="25">
+            <mat-select placeholder="Date" formControlName="customDateDay">
+              <mat-option *ngFor="let number of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]" [value]="number">
+                {{ number }}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
 
+          <mat-form-field fxFlex="75">
+            <mat-select placeholder="Month" formControlName="customDateMonth">
+              <mat-option *ngFor="let mth of monthOption" [value]="mth.value">
+                {{ mth.text }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
 
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">

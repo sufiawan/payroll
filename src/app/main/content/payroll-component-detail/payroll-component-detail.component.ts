@@ -131,13 +131,14 @@ export class PayrollComponentDetailComponent implements OnInit {
   onSubmit(payCompt: PayrollComponent) {
     if (this.form.valid) {
       if (this.payComptDetail.length > 0) {
+        this.loadingbar = false;
 
         payCompt.payrollComponentDtls = this.payComptDetail;
 
         if (payCompt.id === 0) {
-          this.payComptSvc.addPayrollComponent(payCompt).subscribe();
+          this.payComptSvc.addPayrollComponent(payCompt).subscribe(res => { this.loadingbar = true; });
         } else {
-          this.payComptSvc.updatePayrollComponent(payCompt).subscribe();
+          this.payComptSvc.updatePayrollComponent(payCompt).subscribe(res => { this.loadingbar = true; });
         }
       } else {
         alert('Please fill Component Detail');

@@ -71,10 +71,12 @@ export class CompanyDetailComponent implements OnInit {
 
   onSubmit(comp: Company) {
     if (this.form.valid) {
+      this.loadingbar = false;
+
       if (comp.id === 0) {
-        this.companySvc.addCompany(comp).subscribe();
+        this.companySvc.addCompany(comp).subscribe(res => { this.loadingbar = true; });
       } else {
-        this.companySvc.updateCompany(comp).subscribe();
+        this.companySvc.updateCompany(comp).subscribe(res => { this.loadingbar = true; });
       }
     }
   }
