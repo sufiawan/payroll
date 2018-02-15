@@ -32,6 +32,7 @@ import { ProrateService } from './services/prorate.service';
 import { PayrollComponentService } from './services/payroll-component.service';
 import { TimeOffPolicyService } from './services/time-off-policy.service';
 import { TimeOffSchemeService } from './services/time-off-scheme.service';
+import { OvertimeService } from './services/overtime.service';
 
 @NgModule({
     declarations: [
@@ -43,7 +44,7 @@ import { TimeOffSchemeService } from './services/time-off-scheme.service';
         FuseToolbarComponent,
         FuseNavbarVerticalToggleDirective,
         FuseThemeOptionsComponent,
-        FuseQuickPanelComponent
+        FuseQuickPanelComponent        
     ],
     imports     : [
         SharedModule,
@@ -71,7 +72,8 @@ import { TimeOffSchemeService } from './services/time-off-scheme.service';
         ProrateService,
         PayrollComponentService,
         TimeOffPolicyService,
-        TimeOffSchemeService
+        TimeOffSchemeService,
+        OvertimeService
     ],
 })
 

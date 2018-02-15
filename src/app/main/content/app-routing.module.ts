@@ -26,6 +26,9 @@ import { TimeOffPolicyComponent } from './time-off-policy/time-off-policy.compon
 import { TimeOffPolicyDetailComponent } from './time-off-policy-detail/time-off-policy-detail.component';
 import { TimeOffSchemeComponent } from './time-off-scheme/time-off-scheme.component';
 import { TimeOffSchemeDetailComponent } from './time-off-scheme-detail/time-off-scheme-detail.component';
+import { OvertimeComponent } from './overtime/overtime.component';
+import { OvertimeDetailComponent } from './overtime-detail/overtime-detail.component';
+import { OvertimeDetailFormComponent } from './overtime-detail-form/overtime-detail-form.component';
 
 const routes = [
   {
@@ -180,6 +183,22 @@ const routes = [
     path: 'master/timeoffscheme/edit/:id',
     component: TimeOffSchemeDetailComponent,
     canActivate: [AuthGuard]
+  },
+  // Overtime
+  {
+    path: 'master/overtime',
+    component: OvertimeComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'master/overtime/add',
+    component: OvertimeDetailComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'master/overtime/edit/:id',
+    component: OvertimeDetailComponent,
+    canActivate: [AuthGuard]
   }
 ];
 
@@ -206,7 +225,10 @@ const routes = [
     TimeOffPolicyComponent,
     TimeOffPolicyDetailComponent,
     TimeOffSchemeComponent,
-    TimeOffSchemeDetailComponent
+    TimeOffSchemeDetailComponent,
+    OvertimeComponent,
+    OvertimeDetailComponent,
+    OvertimeDetailFormComponent
   ],
   imports: [
     SharedModule,
@@ -214,6 +236,9 @@ const routes = [
   ],
   exports: [
     FuseSampleComponent
+  ],
+  entryComponents: [
+    PayrollComponentDetailFormComponent
   ]
 })
 export class AppRoutingModule { }

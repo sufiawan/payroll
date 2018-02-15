@@ -70,6 +70,12 @@ export class NavigationModel
                                 'title': 'Time Off Scheme',
                                 'type': 'item',
                                 'url': '/master/timeoffscheme'
+                            },
+                            {
+                                'id': 'overtime',
+                                'title': 'Overtime',
+                                'type': 'item',
+                                'url': '/master/overtime'
                             }
                         ]
                     }
