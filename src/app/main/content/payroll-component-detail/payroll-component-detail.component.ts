@@ -6,6 +6,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ProrateService } from '../../services/prorate.service';
 import { PayrollComponentDetail } from '../../models/payroll-component-detail';
 import { FormControl } from '@angular/forms/src/model';
+import { MatDialog } from '@angular/material';
+import { PayrollComponentDetailFormComponent } from '../payroll-component-detail-form/payroll-component-detail-form.component';
 
 @Component({
   selector: 'app-payroll-component-detail',
@@ -24,20 +26,15 @@ export class PayrollComponentDetailComponent implements OnInit {
     tax: false, absentDeduct: false, payrollDeduct: false, compSubsidize: false, proRate: null, payrollComponentDtls: null
   };
 
-  sub: any;  
+  sub: any;
   loadingbar: boolean = true;
 
   payComptDetail: PayrollComponentDetail[] = [];
-  
+
   calcTypeOption = [
     { value: 'D', display_name: 'Daily' },
     { value: 'W', display_name: 'Weekly' },
     { value: 'M', display_name: 'Monthly' },
-  ];
-
-  calcTypeDetailOption = [
-    { value: 'A', display_name: 'Fixed Amount' },
-    { value: 'P', display_name: 'Percentage (%)' },    
   ];
 
   proRateOption = [];
@@ -46,7 +43,8 @@ export class PayrollComponentDetailComponent implements OnInit {
     private payComptSvc: PayrollComponentService,
     private proRateSvc: ProrateService,
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private dialog: MatDialog
   ) {
 
     this.formErrors = {
@@ -56,15 +54,7 @@ export class PayrollComponentDetailComponent implements OnInit {
       dtl_descs: {}
     };
 
-    this.formErrorsDetail = {
-      descs: {},
-      calcType: {},
-      maxSalaryCalc: {},
-      employeeVAl: {},
-      companyVal: {}
-    };
-
-    this.proRateSvc.getProrates().subscribe(res => this.proRateOption = res);    
+    this.proRateSvc.getProrates().subscribe(res => this.proRateOption = res);
   }
 
   ngOnInit() {
@@ -79,15 +69,6 @@ export class PayrollComponentDetailComponent implements OnInit {
       payrollDeduct: this.payCompt.payrollDeduct,
       compSubsidize: this.payCompt.compSubsidize,
       proRate: this.payCompt.proRate
-    });
-
-    this.formDetail = this.formBuilder.group({
-      id: '',
-      descs: ['', Validators.required],
-      calcType: ['', Validators.required],
-      maxSalaryCalc: ['', Validators.required],
-      employeeVAl: ['', Validators.required],
-      companyVal: ['', Validators.required],
     });
 
     this.sub = this.route.params.subscribe(params => {
@@ -146,14 +127,34 @@ export class PayrollComponentDetailComponent implements OnInit {
     }
   }
 
-  onSubmitDetail(payComptDetail: PayrollComponentDetail) {
-    payComptDetail.calcTypeDescs = this.calcTypeDetailOption.find(x => x.value == payComptDetail.calcType).display_name;
-    this.payComptDetail.push(payComptDetail);    
-    this.formDetail.reset();    
+  editDetail(dtl: PayrollComponentDetail) {
+    let dialogRef = this.dialog.open(PayrollComponentDetailFormComponent,
+      {
+        data: dtl
+      }
+    );
+
+    dialogRef.afterClosed().subscribe(res => {
+      let idx = this.payComptDetail.indexOf(dtl);
+
+      for (var prop in this.payComptDetail[idx]) {
+        this.payComptDetail[idx][prop] = res[prop];
+      }
+    });
   }
 
   deleteDetail(dtl: PayrollComponentDetail) {
-    this.payComptDetail.splice(this.payComptDetail.indexOf(dtl), 1);
+    if (confirm('Are you sure want to delete?')) {
+      this.payComptDetail.splice(this.payComptDetail.indexOf(dtl), 1);
+    }
+  }
+
+  addDetail() {
+    let dialogRef = this.dialog.open(PayrollComponentDetailFormComponent);
+
+    dialogRef.afterClosed().subscribe(res => {
+      this.payComptDetail.push(res);
+    });
   }
 
   onFormValuesChanged() {

@@ -1,0 +1,66 @@
+<div class="page-layout simple fullwidth" fusePerfectScrollbar>
+
+  <div class="content p-24 mat-white-bg">
+    <form class="mat-white-bg p-24 mr-24 mb-24" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="formDetail" [formGroup]="form"
+      (ngSubmit)="onSubmit(form.value)" style="width: 100%;">
+
+      <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+        <mat-form-field fxFlex="100">
+          <input matInput placeholder="Description" formControlName="descs" required>
+          <mat-error *ngIf="formErrors.descs.required">
+            Description is required!
+          </mat-error>
+        </mat-form-field>
+
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field fxFlex="100">
+          <mat-select placeholder="Calculation Type" formControlName="calcType">
+            <mat-option *ngFor="let item of calcTypeOption" [value]="item.value">
+              {{ item.display_name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+        <mat-form-field fxFlex="33">
+          <input matInput type="number" placeholder="Max Calculated Salary" formControlName="maxSalaryCalc" required>
+          <mat-error *ngIf="formErrors.maxSalaryCalc.required">
+            Max Calculated Salary is required!
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="33">
+          <input matInput type="number" placeholder="Employee Value" formControlName="employeeVAl" required>
+          <mat-error *ngIf="formErrors.employeeVAl.required">
+            Employee Value is required!
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="33">
+          <input matInput type="number" placeholder="Company Value" formControlName="companyVal" required>
+          <mat-error *ngIf="formErrors.companyVal.required">
+            Company Value is required!
+          </mat-error>
+        </mat-form-field>
+
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 1 auto">
+        <div class="button-row" style="margin-bottom:25px">
+          <button mat-raised-button class="mat-accent" type="submit">
+            Submit
+          </button>          
+          <button mat-raised-button type="button" (click)="onCancelClick()">
+            Cancel
+          </button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>

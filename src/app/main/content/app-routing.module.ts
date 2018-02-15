@@ -21,8 +21,11 @@ import { ProrateListComponent } from './prorate-list/prorate-list.component';
 import { ProrateDetailComponent } from './prorate-detail/prorate-detail.component';
 import { PayrollComponentComponent } from './payroll-component/payroll-component.component';
 import { PayrollComponentDetailComponent } from './payroll-component-detail/payroll-component-detail.component';
+import { PayrollComponentDetailFormComponent } from './payroll-component-detail-form/payroll-component-detail-form.component';
 import { TimeOffPolicyComponent } from './time-off-policy/time-off-policy.component';
 import { TimeOffPolicyDetailComponent } from './time-off-policy-detail/time-off-policy-detail.component';
+import { TimeOffSchemeComponent } from './time-off-scheme/time-off-scheme.component';
+import { TimeOffSchemeDetailComponent } from './time-off-scheme-detail/time-off-scheme-detail.component';
 
 const routes = [
   {
@@ -146,7 +149,7 @@ const routes = [
     component: PayrollComponentDetailComponent,
     canActivate: [AuthGuard]
   },
-  // Time Off
+  // Time Off Policy
   {
     path: 'master/timeoffpolicy',
     component: TimeOffPolicyComponent,
@@ -160,6 +163,22 @@ const routes = [
   {
     path: 'master/timeoffpolicy/edit/:id',
     component: TimeOffPolicyDetailComponent,
+    canActivate: [AuthGuard]
+  },
+  // Time Off Scheme
+  {
+    path: 'master/timeoffscheme',
+    component: TimeOffSchemeComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'master/timeoffscheme/add',
+    component: TimeOffSchemeDetailComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'master/timeoffscheme/edit/:id',
+    component: TimeOffSchemeDetailComponent,
     canActivate: [AuthGuard]
   }
 ];
@@ -183,8 +202,11 @@ const routes = [
     ProrateDetailComponent,
     PayrollComponentComponent,
     PayrollComponentDetailComponent,
+    PayrollComponentDetailFormComponent,
     TimeOffPolicyComponent,
-    TimeOffPolicyDetailComponent
+    TimeOffPolicyDetailComponent,
+    TimeOffSchemeComponent,
+    TimeOffSchemeDetailComponent
   ],
   imports: [
     SharedModule,

@@ -64,6 +64,12 @@ export class NavigationModel
                                 'title': 'Time Off Policy',
                                 'type': 'item',
                                 'url': '/master/timeoffpolicy'
+                            },
+                            {
+                                'id': 'timeoffscheme',
+                                'title': 'Time Off Scheme',
+                                'type': 'item',
+                                'url': '/master/timeoffscheme'
                             }
                         ]
                     }
