@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { TimeOffPolicy } from '../models/time-off-policy';
 import { Observable } from 'rxjs/Observable';
 import { catchError, tap } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders(
@@ -17,7 +18,7 @@ const httpOptions = {
 @Injectable()
 export class TimeOffPolicyService {
 
-  private baseUrl = 'https://cryptic-citadel-16128.herokuapp.com/timeoffpolicies/';
+  private baseUrl = environment.baseUrl + 'timeoffpolicies/';
 
   constructor(
     private http: HttpClient,

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Overtime } from '../models/overtime';
 import { catchError, tap } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders(
@@ -17,7 +18,7 @@ const httpOptions = {
 @Injectable()
 export class OvertimeService {
 
-  private baseUrl: string = 'https://cryptic-citadel-16128.herokuapp.com/overtimes/';
+  private baseUrl: string = environment.baseUrl + 'overtimes/';
   constructor(
     private http: HttpClient,
     private logErrorHandle: LogErrorHandleService,

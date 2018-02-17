@@ -1,3 +1,55 @@
-<p>
-  overtime-detail-form works!
-</p>
+<div class="page-layout simple fullwidth" fusePerfectScrollbar>
+
+    <div class="content p-24 mat-white-bg">
+      <form class="mat-white-bg p-24 mr-24 mb-24" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="formDetail" [formGroup]="form"
+        (ngSubmit)="onSubmit(form.value)" style="width: 100%;">       
+  
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+          <mat-form-field fxFlex="100">
+            <mat-select placeholder="Type" formControlName="type">
+              <mat-option *ngFor="let item of typeOption" [value]="item.value">
+                {{ item.display_name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+  
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+  
+          <mat-form-field fxFlex="33">
+            <input matInput type="number" placeholder="Multiply From" formControlName="multiplyFrom" required>
+            <mat-error *ngIf="formErrors.multiplyFrom.required">
+                Multiply From is required!
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex="33">
+            <input matInput type="number" placeholder="Multiply To" formControlName="multiplyTo" required>
+            <mat-error *ngIf="formErrors.multiplyTo.required">
+              Multiply To is required!
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex="33">
+            <input matInput type="number" placeholder="Multiply By" formControlName="multiplyBy" required>
+            <mat-error *ngIf="formErrors.multiplyBy.required">
+                Multiply By is required!
+            </mat-error>
+          </mat-form-field>
+  
+        </div>
+  
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 1 auto">
+          <div class="button-row" style="margin-bottom:25px">
+            <button mat-raised-button class="mat-accent" type="submit">
+              Submit
+            </button>          
+            <button mat-raised-button type="button" (click)="onCancelClick()">
+              Cancel
+            </button>
+          </div>
+        </div>
+  
+      </form>
+    </div>
+  </div>

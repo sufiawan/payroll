@@ -13,13 +13,13 @@ export class PayrollComponentDetailFormComponent implements OnInit {
     id: 0, descs: '', calcType: '', calcTypeDescs: '', companyVal: 0, employeeVAl: 0, maxSalaryCalc: 0
   };
 
-  form: FormGroup;  
+  form: FormGroup;
   formErrors: any;
   sub: any;
 
   calcTypeOption = [
     { value: 'A', display_name: 'Fixed Amount' },
-    { value: 'P', display_name: 'Percentage (%)' },    
+    { value: 'P', display_name: 'Percentage (%)' },
   ];
 
   constructor(
@@ -60,8 +60,10 @@ export class PayrollComponentDetailFormComponent implements OnInit {
   // }
 
   onSubmit(payComptDtl: PayrollComponentDetail) {
-    payComptDtl.calcTypeDescs = this.calcTypeOption.find(x => x.value == payComptDtl.calcType).display_name;
-    this.dialogRef.close(payComptDtl);
+    if (this.form.valid) {
+      payComptDtl.calcTypeDescs = this.calcTypeOption.find(x => x.value == payComptDtl.calcType).display_name;
+      this.dialogRef.close(payComptDtl);
+    }
   }
 
   onFormValuesChanged() {

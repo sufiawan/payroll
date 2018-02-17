@@ -238,7 +238,8 @@ const routes = [
     FuseSampleComponent
   ],
   entryComponents: [
-    PayrollComponentDetailFormComponent
+    PayrollComponentDetailFormComponent,
+    OvertimeDetailFormComponent
   ]
 })
 export class AppRoutingModule { }

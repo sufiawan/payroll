@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { catchError, tap } from 'rxjs/operators';
 import { JobLevel } from '../models/job-level';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders(
@@ -17,7 +18,7 @@ const httpOptions = {
 @Injectable()
 export class JobLevelService {
 
-  private baseUrl: string = 'https://cryptic-citadel-16128.herokuapp.com/joblevels/';
+  private baseUrl: string = environment.baseUrl + 'joblevels/';
   constructor(
     private http: HttpClient,
     private logErrorHandle: LogErrorHandleService,

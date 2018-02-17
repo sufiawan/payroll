@@ -6,6 +6,7 @@ import { Company } from '../models/company';
 import { LogErrorHandleService } from './log-error-handle.service';
 import { catchError, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders(
@@ -17,7 +18,7 @@ const httpOptions = {
 
 @Injectable()
 export class CompanyService {
-  private baseUrl: string = 'https://cryptic-citadel-16128.herokuapp.com/companies/';
+  private baseUrl: string = environment.baseUrl + 'companies/';
   constructor(
     private http: HttpClient,
     private logErrorHandle: LogErrorHandleService,
