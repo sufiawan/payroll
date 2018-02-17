@@ -29,6 +29,9 @@ import { TimeOffSchemeDetailComponent } from './time-off-scheme-detail/time-off-
 import { OvertimeComponent } from './overtime/overtime.component';
 import { OvertimeDetailComponent } from './overtime-detail/overtime-detail.component';
 import { OvertimeDetailFormComponent } from './overtime-detail-form/overtime-detail-form.component';
+import { TaxSetupDetailFormComponent } from './tax-setup-detail-form/tax-setup-detail-form.component';
+import { TaxSetupComponent } from './tax-setup/tax-setup.component';
+import { TaxSetupDetailComponent } from './tax-setup-detail/tax-setup-detail.component';
 
 const routes = [
   {
@@ -199,6 +202,22 @@ const routes = [
     path: 'master/overtime/edit/:id',
     component: OvertimeDetailComponent,
     canActivate: [AuthGuard]
+  },
+  // Tax Setup
+  {
+    path: 'master/taxsetup',
+    component: TaxSetupComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'master/taxsetup/add',
+    component: TaxSetupDetailComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'master/taxsetup/edit/:id',
+    component: TaxSetupDetailComponent,
+    canActivate: [AuthGuard]
   }
 ];
 
@@ -228,7 +247,10 @@ const routes = [
     TimeOffSchemeDetailComponent,
     OvertimeComponent,
     OvertimeDetailComponent,
-    OvertimeDetailFormComponent
+    OvertimeDetailFormComponent,
+    TaxSetupComponent,
+    TaxSetupDetailComponent,
+    TaxSetupDetailFormComponent
   ],
   imports: [
     SharedModule,
@@ -239,7 +261,8 @@ const routes = [
   ],
   entryComponents: [
     PayrollComponentDetailFormComponent,
-    OvertimeDetailFormComponent
+    OvertimeDetailFormComponent,
+    TaxSetupDetailFormComponent
   ]
 })
 export class AppRoutingModule { }

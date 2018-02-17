@@ -13,9 +13,9 @@ export class DivisionDetailComponent implements OnInit {
 
   form: FormGroup;
   formErrors: any;
-  div: Division = { id: 0, divisionCd: '', name: '', descs: '' };
+  div: Division = { id: 0, divisionCd: null, name: null, descs: null };
   sub: any;
-  loadingbar: boolean = true;
+  loadingbar = true;
 
   constructor(
     private divSvc: DivisionService,
@@ -40,7 +40,7 @@ export class DivisionDetailComponent implements OnInit {
     });
 
     this.sub = this.route.params.subscribe(params => {
-      let id = Number.parseInt(params['id']);
+      const id = Number.parseInt(params['id']);
       if (id) {
         this.loadingbar = false;
 
@@ -73,8 +73,8 @@ export class DivisionDetailComponent implements OnInit {
     if (this.form.valid) {
       this.loadingbar = false;
 
-      if (div.id == 0) {
-        this.divSvc.addDivision(div).subscribe(res => { this.loadingbar = true; })
+      if (div.id === 0) {
+        this.divSvc.addDivision(div).subscribe(res => { this.loadingbar = true; });
       } else {
         this.divSvc.updateDivision(div).subscribe(res => { this.loadingbar = true; });
       }

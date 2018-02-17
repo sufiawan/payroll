@@ -33,6 +33,7 @@ import { PayrollComponentService } from './services/payroll-component.service';
 import { TimeOffPolicyService } from './services/time-off-policy.service';
 import { TimeOffSchemeService } from './services/time-off-scheme.service';
 import { OvertimeService } from './services/overtime.service';
+import { TaxSetupService } from './services/tax-setup.service';
 
 @NgModule({
     declarations: [
@@ -44,7 +45,7 @@ import { OvertimeService } from './services/overtime.service';
         FuseToolbarComponent,
         FuseNavbarVerticalToggleDirective,
         FuseThemeOptionsComponent,
-        FuseQuickPanelComponent        
+        FuseQuickPanelComponent   
     ],
     imports     : [
         SharedModule,
@@ -73,7 +74,8 @@ import { OvertimeService } from './services/overtime.service';
         PayrollComponentService,
         TimeOffPolicyService,
         TimeOffSchemeService,
-        OvertimeService
+        OvertimeService,
+        TaxSetupService
     ],
 })
 

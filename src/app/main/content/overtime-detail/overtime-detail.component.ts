@@ -19,9 +19,9 @@ export class OvertimeDetailComponent implements OnInit {
   ovtDtl: OvertimeDetail[] = [];
   ovtDtlWeekday: OvertimeDetail[] = [];
   ovtDtlWeekend: OvertimeDetail[] = [];
-  ovt: Overtime = { id: 0, overtimeCd: '', name: '', roundingMin: 0, overtimeDtls: this.ovtDtl };  
+  ovt: Overtime = { id: 0, overtimeCd: null, name: null, roundingMin: null, overtimeDtls: null };  
   sub: any;
-  loadingbar: boolean = true;
+  loadingbar = true;
 
   constructor(
     private ovtSvc: OvertimeService,
@@ -48,7 +48,7 @@ export class OvertimeDetailComponent implements OnInit {
     });
 
     this.sub = this.route.params.subscribe(params => {
-      let id = Number.parseInt(params['id']);
+      const id = Number.parseInt(params['id']);
       if (id) {
         this.loadingbar = false;
 
@@ -62,6 +62,8 @@ export class OvertimeDetailComponent implements OnInit {
               name: this.ovt.name,
               roundingMin: this.ovt.roundingMin
             });
+
+            this.ovtDtl = res.overtimeDtls;
 
             this.loadingbar = true;
           });
@@ -77,6 +79,7 @@ export class OvertimeDetailComponent implements OnInit {
   onSubmit(ovt: Overtime) {
     if (this.form.valid) {
       this.loadingbar = false;
+      ovt.overtimeDtls = this.ovtDtl;
 
       if (ovt.id === 0) {
         this.ovtSvc.addData(ovt).subscribe(res => { this.loadingbar = true; });

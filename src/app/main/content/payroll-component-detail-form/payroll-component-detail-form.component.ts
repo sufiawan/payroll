@@ -10,7 +10,7 @@ import { PayrollComponentDetail } from '../../models/payroll-component-detail';
 })
 export class PayrollComponentDetailFormComponent implements OnInit {
   payComptDetail: PayrollComponentDetail = {
-    id: 0, descs: '', calcType: '', calcTypeDescs: '', companyVal: 0, employeeVAl: 0, maxSalaryCalc: 0
+    id: 0, descs: null, calcType: null, calcTypeDescs: null, companyVal: null, employeeVAl: null, maxSalaryCalc: null
   };
 
   form: FormGroup;

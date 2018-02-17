@@ -14,10 +14,10 @@ export class TimeOffPolicyDetailComponent implements OnInit {
 
   form: FormGroup;
   formErrors: any;
-  timeOff: TimeOffPolicy = { id: 0, timeOffCd: '', name: '', resetBy: '', resetByDescs: '', customDate: '', timeOffVal: 0 };
+  timeOff: TimeOffPolicy = { id: 0, timeOffCd: null, name: null, resetBy: null, resetByDescs: null, customDate: null, timeOffVal: null };
   sub: any;
-  loadingbar: boolean = true;
-  resetByVal: boolean = true;
+  loadingbar = true;
+  resetByVal = true;
 
   resetByOption = [
     { value: 'J', display_name: 'Join Date' },
@@ -26,7 +26,7 @@ export class TimeOffPolicyDetailComponent implements OnInit {
     { value: 'C', display_name: 'Custom Day' }
   ];
 
-  monthOption =[
+  monthOption = [
     {value: 1, text: 'January'},
     {value: 2, text: 'February'},
     {value: 3, text: 'March'},
@@ -39,7 +39,7 @@ export class TimeOffPolicyDetailComponent implements OnInit {
     {value: 10, text: 'October'},
     {value: 11, text: 'November'},
     {value: 12, text: 'December'}
-  ]
+  ];
 
   constructor(
     private timeOffSvc: TimeOffPolicyService,
@@ -67,7 +67,7 @@ export class TimeOffPolicyDetailComponent implements OnInit {
     });
 
     this.sub = this.route.params.subscribe(params => {
-      let id = Number.parseInt(params['id']);
+      const id = Number.parseInt(params['id']);
       if (id) {
         this.loadingbar = false;
 
@@ -75,11 +75,11 @@ export class TimeOffPolicyDetailComponent implements OnInit {
           .subscribe(res => {
             this.timeOff = res;
 
-            if (this.timeOff.resetBy == 'C') {
+            if (this.timeOff.resetBy === 'C') {
               this.resetByVal = false;
             }
 
-            let custDate = this.timeOff.customDate.split('-');            
+            const custDate = this.timeOff.customDate.split('-');            
 
             this.form.setValue({
               id: this.timeOff.id,
@@ -110,16 +110,16 @@ export class TimeOffPolicyDetailComponent implements OnInit {
     if (this.form.valid) {
       this.loadingbar = false;
 
-      if (timeOff.resetBy != 'C') {
+      if (timeOff.resetBy !== 'C') {
         timeOff.customDate = new Date().toDateString();
       } else {        
         let custDate: number = this.form.controls['customDateDay'].value;
         let custMonth: number = this.form.controls['customDateMonth'].value;
 
         // validate date
-        if (custMonth == 2 && custDate > 28) {
+        if (custMonth === 2 && custDate > 28) {
           custDate = 28;
-        } else if ([4, 6, 9, 11].indexOf(custMonth) != -1 && custDate > 30) {
+        } else if ([4, 6, 9, 11].indexOf(custMonth) !== -1 && custDate > 30) {
           custDate = 30;
         };        
 
@@ -135,7 +135,7 @@ export class TimeOffPolicyDetailComponent implements OnInit {
   }
 
   onResetByChange(val: string) {
-    if (val == 'C') {
+    if (val === 'C') {
       this.resetByVal = false;
     } else {
       this.resetByVal = true;

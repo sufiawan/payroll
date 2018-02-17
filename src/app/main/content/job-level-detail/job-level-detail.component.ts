@@ -13,9 +13,9 @@ export class JobLevelDetailComponent implements OnInit {
 
   form: FormGroup;
   formErrors: any;
-  jobLvl: JobLevel = { id: 0, levelCd: '', name: '' };
+  jobLvl: JobLevel = { id: 0, levelCd: null, name: null };
   sub: any;
-  loadingbar: boolean = true;
+  loadingbar = true;
 
   constructor(
     private jobLvlSvc: JobLevelService,
@@ -38,7 +38,7 @@ export class JobLevelDetailComponent implements OnInit {
     });
 
     this.sub = this.route.params.subscribe(params => {
-      let id = Number.parseInt(params['id']);
+      const id = Number.parseInt(params['id']);
       if (id) {
         this.loadingbar = false;
 
@@ -70,10 +70,11 @@ export class JobLevelDetailComponent implements OnInit {
     if (this.form.valid) {
       this.loadingbar = false;
 
-      if (jobLvl.id == 0)
+      if (jobLvl.id === 0) {
         this.jobLvlSvc.addJobLevel(jobLvl).subscribe(res => { this.loadingbar = true; });
-      else
+      } else {
         this.jobLvlSvc.updateJobLevel(jobLvl).subscribe(res => { this.loadingbar = true; });
+      }
     }
   }
 

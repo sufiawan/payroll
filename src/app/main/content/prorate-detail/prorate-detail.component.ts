@@ -13,10 +13,10 @@ export class ProrateDetailComponent implements OnInit {
 
   form: FormGroup;
   formErrors: any;
-  proRate: Prorate = { id: 0, name: '', proRateCd: '', proRateDivider: '', proRateDivCus: 0, proRateVal: '' };
+  proRate: Prorate = { id: 0, name: null, proRateCd: null, proRateDivider: null, proRateDivCus: null, proRateVal: null };
   sub: any;
   divVal = true;
-  loadingbar: boolean = true;
+  loadingbar = true;
   
   proRateValueOption = [
     {value: 'W', display_name: 'Working Days'},

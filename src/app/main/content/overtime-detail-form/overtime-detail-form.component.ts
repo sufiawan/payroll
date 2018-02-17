@@ -13,7 +13,7 @@ export class OvertimeDetailFormComponent implements OnInit {
   form: FormGroup;
   formErrors: any;
 
-  ovtDtl: OvertimeDetail = { id: 0, type: '', multiplyFrom: 0, multiplyTo: 0, multiplyBy: 0 };
+  ovtDtl: OvertimeDetail = { id: 0, type: '', multplyFrom: 0, multplyTo: 0, multplyBy: 0 };
 
   typeOption = [
     { value: 'N', display_name: 'Weekday' },
@@ -27,9 +27,9 @@ export class OvertimeDetailFormComponent implements OnInit {
   ) {
     this.formErrors = {
       type: {},
-      multiplyFrom: {},
-      multiplyTo: {},
-      multiplyBy: {}      
+      multplyFrom: {},
+      multplyTo: {},
+      multplyBy: {}      
     };
 
     if (data) {
@@ -41,9 +41,9 @@ export class OvertimeDetailFormComponent implements OnInit {
     this.form = this.formBuilder.group({
       id: this.ovtDtl.id,
       type: [this.ovtDtl.type, Validators.required],
-      multiplyFrom: [this.ovtDtl.multiplyFrom, Validators.required],
-      multiplyTo: [this.ovtDtl.multiplyTo, Validators.required],
-      multiplyBy: [this.ovtDtl.multiplyBy, Validators.required]
+      multplyFrom: [this.ovtDtl.multplyFrom, Validators.required],
+      multplyTo: [this.ovtDtl.multplyTo, Validators.required],
+      multplyBy: [this.ovtDtl.multplyBy, Validators.required]
     });    
   }
 
