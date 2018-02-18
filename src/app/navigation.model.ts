@@ -82,6 +82,12 @@ export class NavigationModel
                                 'title': 'Tax Setup',
                                 'type': 'item',
                                 'url': '/master/taxsetup'
+                            },
+                            {
+                                'id': 'absentpattern',
+                                'title': 'Absent Pattern',
+                                'type': 'item',
+                                'url': '/master/absentpattern'
                             }
                         ]
                     }

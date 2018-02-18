@@ -14,7 +14,7 @@ export class TimeOffPolicyDetailComponent implements OnInit {
 
   form: FormGroup;
   formErrors: any;
-  timeOff: TimeOffPolicy = { id: 0, timeOffCd: null, name: null, resetBy: null, resetByDescs: null, customDate: null, timeOffVal: null };
+  timeOff: TimeOffPolicy = { id: 0, timeOffCd: null, name: null, resetBy: null, resetByDescs: null, customDate: new Date().toDateString(), timeOffVal: null };
   sub: any;
   loadingbar = true;
   resetByVal = true;

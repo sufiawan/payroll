@@ -6,5 +6,5 @@
 export const environment = {
     production: false,
     hmr       : false,
-    baseUrl: 'https://cryptic-citadel-16128.herokuapp.com/'
+    baseUrl: 'https://payroll-api.herokuapp.com/'
 };

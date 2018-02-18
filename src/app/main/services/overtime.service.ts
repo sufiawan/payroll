@@ -41,7 +41,7 @@ export class OvertimeService {
     return this.http.post<Overtime>(this.baseUrl, ovt, httpOptions).pipe(
       tap((ovt: Overtime) => {
         this.logErrorHandle.log('Overtime', ovt.overtimeCd + ' successfully added', 0);
-        this.router.navigate(['master/timeoffpolicy']);
+        this.router.navigate(['master/overtime']);
       }),
       catchError(this.logErrorHandle.handleError<Overtime>('add'))
       );
@@ -51,7 +51,7 @@ export class OvertimeService {
     return this.http.put<Overtime>(this.baseUrl + ovt.id + '/', ovt, httpOptions).pipe(
       tap((ovt: Overtime) => {
         this.logErrorHandle.log('Overtime', ovt.overtimeCd + ' successfully updated', 0);
-        this.router.navigate(['master/timeoffpolicy']);
+        this.router.navigate(['master/overtime']);
       }),
       catchError(this.logErrorHandle.handleError<Overtime>('update'))
     );

@@ -23,7 +23,7 @@ export class PayrollComponentDetailComponent implements OnInit {
 
   payCompt: PayrollComponent = {
     id: 0, componentCd: null, name: null, calcType: null, calcTypeDescs: null,
-    tax: null, absentDeduct: null, payrollDeduct: null, compSubsidize: null, proRate: null, payrollComponentDtls: null
+    tax: false, absentDeduct: false, payrollDeduct: false, compSubsidize: false, proRate: null, payrollComponentDtls: null
   };
 
   sub: any;

@@ -65,6 +65,8 @@ export class OvertimeDetailComponent implements OnInit {
 
             this.ovtDtl = res.overtimeDtls;
 
+            this.regroupDetail();
+
             this.loadingbar = true;
           });
       }

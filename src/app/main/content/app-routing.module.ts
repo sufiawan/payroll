@@ -32,6 +32,8 @@ import { OvertimeDetailFormComponent } from './overtime-detail-form/overtime-det
 import { TaxSetupDetailFormComponent } from './tax-setup-detail-form/tax-setup-detail-form.component';
 import { TaxSetupComponent } from './tax-setup/tax-setup.component';
 import { TaxSetupDetailComponent } from './tax-setup-detail/tax-setup-detail.component';
+import { AbsentPatternComponent } from './absent-pattern/absent-pattern.component';
+import { AbsentPatternDetailComponent } from './absent-pattern-detail/absent-pattern-detail.component';
 
 const routes = [
   {
@@ -218,6 +220,22 @@ const routes = [
     path: 'master/taxsetup/edit/:id',
     component: TaxSetupDetailComponent,
     canActivate: [AuthGuard]
+  },
+  // Absent Pattern
+  {
+    path: 'master/absentpattern',
+    component: AbsentPatternComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'master/absentpattern/add',
+    component: AbsentPatternDetailComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'master/absentpattern/edit/:id',
+    component: AbsentPatternDetailComponent,
+    canActivate: [AuthGuard]
   }
 ];
 
@@ -250,7 +268,9 @@ const routes = [
     OvertimeDetailFormComponent,
     TaxSetupComponent,
     TaxSetupDetailComponent,
-    TaxSetupDetailFormComponent
+    TaxSetupDetailFormComponent,
+    AbsentPatternComponent,
+    AbsentPatternDetailComponent
   ],
   imports: [
     SharedModule,

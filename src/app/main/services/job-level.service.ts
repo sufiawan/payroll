@@ -41,7 +41,7 @@ export class JobLevelService {
     return this.http.post<JobLevel>(this.baseUrl, jobLevel, httpOptions).pipe(
       tap((jobLevel: JobLevel) => {
         this.logErrorHandle.log('JobLevel', jobLevel.levelCd + ' successfully added', 0);
-        this.router.navigate(['master/jobplevel']);
+        this.router.navigate(['master/joblevel']);
       }),
       catchError(this.logErrorHandle.handleError<JobLevel>('add'))
     );
@@ -51,7 +51,7 @@ export class JobLevelService {
     return this.http.put<JobLevel>(this.baseUrl + jobLevel.id + '/', jobLevel, httpOptions).pipe(
       tap((jobLevel: JobLevel) => {
         this.logErrorHandle.log('JobLevel', jobLevel.levelCd + ' successfully updated', 0);
-        this.router.navigate(['master/jobplevel']);
+        this.router.navigate(['master/joblevel']);
       }),
       catchError(this.logErrorHandle.handleError<JobLevel>('update'))
     );
