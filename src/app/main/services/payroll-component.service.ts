@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { PayrollComponent } from '../models/payroll-component';
 import { Observable } from 'rxjs/Observable';
 import { catchError, tap } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders(
@@ -17,7 +18,7 @@ const httpOptions = {
 @Injectable()
 export class PayrollComponentService {
 
-  private baseUrl: string = 'https://cryptic-citadel-16128.herokuapp.com/payrollcomponents/';
+  private baseUrl: string = environment.baseUrl + 'payrollcomponents/';
   constructor(
     private http: HttpClient,
     private logErrorHandle: LogErrorHandleService,

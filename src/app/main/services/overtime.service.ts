@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Overtime } from '../models/overtime';
 import { catchError, tap } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders(
@@ -17,7 +18,7 @@ const httpOptions = {
 @Injectable()
 export class OvertimeService {
 
-  private baseUrl: string = 'https://cryptic-citadel-16128.herokuapp.com/overtimes/';
+  private baseUrl: string = environment.baseUrl + 'overtimes/';
   constructor(
     private http: HttpClient,
     private logErrorHandle: LogErrorHandleService,
@@ -40,7 +41,7 @@ export class OvertimeService {
     return this.http.post<Overtime>(this.baseUrl, ovt, httpOptions).pipe(
       tap((ovt: Overtime) => {
         this.logErrorHandle.log('Overtime', ovt.overtimeCd + ' successfully added', 0);
-        this.router.navigate(['master/timeoffpolicy']);
+        this.router.navigate(['master/overtime']);
       }),
       catchError(this.logErrorHandle.handleError<Overtime>('add'))
       );
@@ -50,7 +51,7 @@ export class OvertimeService {
     return this.http.put<Overtime>(this.baseUrl + ovt.id + '/', ovt, httpOptions).pipe(
       tap((ovt: Overtime) => {
         this.logErrorHandle.log('Overtime', ovt.overtimeCd + ' successfully updated', 0);
-        this.router.navigate(['master/timeoffpolicy']);
+        this.router.navigate(['master/overtime']);
       }),
       catchError(this.logErrorHandle.handleError<Overtime>('update'))
     );

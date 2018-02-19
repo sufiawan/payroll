@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { catchError, tap } from 'rxjs/operators';
 import { JobLevel } from '../models/job-level';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders(
@@ -17,7 +18,7 @@ const httpOptions = {
 @Injectable()
 export class JobLevelService {
 
-  private baseUrl: string = 'https://cryptic-citadel-16128.herokuapp.com/joblevels/';
+  private baseUrl: string = environment.baseUrl + 'joblevels/';
   constructor(
     private http: HttpClient,
     private logErrorHandle: LogErrorHandleService,
@@ -40,7 +41,7 @@ export class JobLevelService {
     return this.http.post<JobLevel>(this.baseUrl, jobLevel, httpOptions).pipe(
       tap((jobLevel: JobLevel) => {
         this.logErrorHandle.log('JobLevel', jobLevel.levelCd + ' successfully added', 0);
-        this.router.navigate(['master/jobplevel']);
+        this.router.navigate(['master/joblevel']);
       }),
       catchError(this.logErrorHandle.handleError<JobLevel>('add'))
     );
@@ -50,7 +51,7 @@ export class JobLevelService {
     return this.http.put<JobLevel>(this.baseUrl + jobLevel.id + '/', jobLevel, httpOptions).pipe(
       tap((jobLevel: JobLevel) => {
         this.logErrorHandle.log('JobLevel', jobLevel.levelCd + ' successfully updated', 0);
-        this.router.navigate(['master/jobplevel']);
+        this.router.navigate(['master/joblevel']);
       }),
       catchError(this.logErrorHandle.handleError<JobLevel>('update'))
     );

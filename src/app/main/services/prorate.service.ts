@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Prorate } from '../models/prorate';
 import { catchError, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
+import { environment } from '../../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders(
@@ -17,7 +18,7 @@ const httpOptions = {
 @Injectable()
 export class ProrateService {
 
-  private baseUrl: string = 'https://cryptic-citadel-16128.herokuapp.com/prorates/';
+  private baseUrl: string = environment.baseUrl + 'prorates/';
   constructor(
     private http: HttpClient,
     private logErrorHandle: LogErrorHandleService,

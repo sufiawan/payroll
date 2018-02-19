@@ -15,9 +15,9 @@ export class TimeOffSchemeDetailComponent implements OnInit {
 
   form: FormGroup;
   formErrors: any;
-  timeOffScheme: TimeOffScheme = { id: 0, schemeCd: '', name: '', timeOffPolicy: null };
+  timeOffScheme: TimeOffScheme = { id: 0, schemeCd: null, name: null, timeOffPolicy: null };
   sub: any;
-  loadingbar: boolean = true;
+  loadingbar = true;
 
   timeOffPolicyOption = [];
 
@@ -44,7 +44,7 @@ export class TimeOffSchemeDetailComponent implements OnInit {
     });
 
     this.sub = this.route.params.subscribe(params => {
-      let id = Number.parseInt(params['id']);
+      const id = Number.parseInt(params['id']);
       if (id) {
         this.loadingbar = false;
 

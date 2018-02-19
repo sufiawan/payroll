@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { JobPosition } from '../models/job-position';
 import { catchError, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders(
@@ -17,7 +18,7 @@ const httpOptions = {
 @Injectable()
 export class JobPositionService {
 
-  private baseUrl: string = 'https://cryptic-citadel-16128.herokuapp.com/jobpositions/';
+  private baseUrl: string = environment.baseUrl + 'jobpositions/';
   constructor(
     private http: HttpClient,
     private logErrorHandle: LogErrorHandleService,

@@ -29,6 +29,11 @@ import { TimeOffSchemeDetailComponent } from './time-off-scheme-detail/time-off-
 import { OvertimeComponent } from './overtime/overtime.component';
 import { OvertimeDetailComponent } from './overtime-detail/overtime-detail.component';
 import { OvertimeDetailFormComponent } from './overtime-detail-form/overtime-detail-form.component';
+import { TaxSetupDetailFormComponent } from './tax-setup-detail-form/tax-setup-detail-form.component';
+import { TaxSetupComponent } from './tax-setup/tax-setup.component';
+import { TaxSetupDetailComponent } from './tax-setup-detail/tax-setup-detail.component';
+import { AbsentPatternComponent } from './absent-pattern/absent-pattern.component';
+import { AbsentPatternDetailComponent } from './absent-pattern-detail/absent-pattern-detail.component';
 
 const routes = [
   {
@@ -199,6 +204,38 @@ const routes = [
     path: 'master/overtime/edit/:id',
     component: OvertimeDetailComponent,
     canActivate: [AuthGuard]
+  },
+  // Tax Setup
+  {
+    path: 'master/taxsetup',
+    component: TaxSetupComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'master/taxsetup/add',
+    component: TaxSetupDetailComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'master/taxsetup/edit/:id',
+    component: TaxSetupDetailComponent,
+    canActivate: [AuthGuard]
+  },
+  // Absent Pattern
+  {
+    path: 'master/absentpattern',
+    component: AbsentPatternComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'master/absentpattern/add',
+    component: AbsentPatternDetailComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'master/absentpattern/edit/:id',
+    component: AbsentPatternDetailComponent,
+    canActivate: [AuthGuard]
   }
 ];
 
@@ -228,7 +265,12 @@ const routes = [
     TimeOffSchemeDetailComponent,
     OvertimeComponent,
     OvertimeDetailComponent,
-    OvertimeDetailFormComponent
+    OvertimeDetailFormComponent,
+    TaxSetupComponent,
+    TaxSetupDetailComponent,
+    TaxSetupDetailFormComponent,
+    AbsentPatternComponent,
+    AbsentPatternDetailComponent
   ],
   imports: [
     SharedModule,
@@ -238,7 +280,9 @@ const routes = [
     FuseSampleComponent
   ],
   entryComponents: [
-    PayrollComponentDetailFormComponent
+    PayrollComponentDetailFormComponent,
+    OvertimeDetailFormComponent,
+    TaxSetupDetailFormComponent
   ]
 })
 export class AppRoutingModule { }

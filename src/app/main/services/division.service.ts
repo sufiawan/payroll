@@ -5,6 +5,7 @@ import { Division } from '../models/division';
 import { Observable } from 'rxjs/Observable';
 import { catchError, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders(
@@ -17,7 +18,7 @@ const httpOptions = {
 @Injectable()
 export class DivisionService {
 
-  private baseUrl: string = 'https://cryptic-citadel-16128.herokuapp.com/divisions/';
+  private baseUrl: string = environment.baseUrl + 'divisions/';
   constructor(
     private http: HttpClient,
     private logErrorHandle: LogErrorHandleService,

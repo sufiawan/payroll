@@ -15,14 +15,14 @@ export class LogErrorHandleService {
    * @param operation - name of the operation that failed
    * @param result - optional value to return as the observable result
    */
-  handleError<T> (operation = 'operation', result?: T) {
+  handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
 
       // TODO: better job of transforming error for user consumption
-      this.log("Error", `${operation} failed: ${error.message}`, 3);
+      this.log('Error', `${operation} failed: ${error.error.error_message}`, 3);
 
       // Let the app keep running by returning an empty result.
       return of(result as T);
@@ -30,8 +30,8 @@ export class LogErrorHandleService {
   }
 
   /** Log a RwService message with the MessageService */
-  log( title: string, message: string, type: number) {
-    switch(type) {
+  log(title: string, message: string, type: number) {
+    switch (type) {
       case 0: {
         this.toastr.success(message, title);
         break;
@@ -48,7 +48,7 @@ export class LogErrorHandleService {
         this.toastr.error(message, title);
         break;
       }
-      default : {
+      default: {
         break;
       }
     }

@@ -22,12 +22,12 @@ export class PayrollComponentDetailComponent implements OnInit {
   formErrorsDetail: any;
 
   payCompt: PayrollComponent = {
-    id: 0, componentCd: '', name: '', calcType: '', calcTypeDescs: '',
+    id: 0, componentCd: null, name: null, calcType: null, calcTypeDescs: null,
     tax: false, absentDeduct: false, payrollDeduct: false, compSubsidize: false, proRate: null, payrollComponentDtls: null
   };
 
   sub: any;
-  loadingbar: boolean = true;
+  loadingbar = true;
 
   payComptDetail: PayrollComponentDetail[] = [];
 
@@ -72,7 +72,7 @@ export class PayrollComponentDetailComponent implements OnInit {
     });
 
     this.sub = this.route.params.subscribe(params => {
-      let id = Number.parseInt(params['id']);
+      const id = Number.parseInt(params['id']);
       if (id) {
         this.loadingbar = false;
         this.payComptSvc.getPayrollComponent(id)
@@ -128,7 +128,7 @@ export class PayrollComponentDetailComponent implements OnInit {
   }
 
   editDetail(dtl: PayrollComponentDetail) {
-    let dialogRef = this.dialog.open(PayrollComponentDetailFormComponent,
+    const dialogRef = this.dialog.open(PayrollComponentDetailFormComponent,
       {
         data: dtl
       }
@@ -150,7 +150,7 @@ export class PayrollComponentDetailComponent implements OnInit {
   }
 
   addDetail() {
-    let dialogRef = this.dialog.open(PayrollComponentDetailFormComponent);
+    const dialogRef = this.dialog.open(PayrollComponentDetailFormComponent);
 
     dialogRef.afterClosed().subscribe(res => {
       this.payComptDetail.push(res);

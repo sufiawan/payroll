@@ -1,0 +1,118 @@
+<div id="forms" class="page-layout simple fullwidth" fxLayout="column" fusePerfectScrollbar>
+
+  <!-- HEADER -->
+  <div class="header mat-accent-bg p-24 h-160" fxLayout="row" fxLayoutAlign="start center">
+    <div fxLayout="column" fxLayoutAlign="center start">
+      <div class="h1 mt-16">Company</div>
+    </div>
+  </div>
+  <!-- / HEADER -->
+  <div class="content">
+    <mat-progress-bar mode="indeterminate" [hidden]="loadingbar"></mat-progress-bar>
+  </div>
+  <!-- CONTENT -->
+  <div class="content p-24">
+
+    <div fxLayout="column" fxLayoutAlign="start start" fxLayout.gt-md="row">
+
+      <!-- REACTIVE FORM EXAMPLE -->
+
+      <form class="mat-white-bg mat-elevation-z4 p-24 mr-24 mb-24" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form"
+        [formGroup]="form" (ngSubmit)="onSubmit(form.value)" style="width: 100%;">
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+          <mat-form-field fxFlex="100">
+            <mat-select placeholder="Company" formControlName="company">
+              <mat-option *ngFor="let item of compOption" [value]="item.id">
+                {{ item.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+          <mat-form-field fxFlex="50">
+            <input matInput type="number" placeholder="PTKP Pribadi" formControlName="ptkpPribadi" required>
+            <mat-error *ngIf="formErrors.ptkpPribadi.required">
+              PTKP Pribadi is required!
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field fxFlex="50">
+            <input matInput type="number" placeholder="PTKP Istri" formControlName="ptkpIstri" required>
+            <mat-error *ngIf="formErrors.ptkpIstri.required">
+              PTKP Istri is required!
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+          <mat-form-field fxFlex="50">
+            <input matInput type="number" placeholder="PTKP Tanggungan" formControlName="ptkpTanggungan" required>
+            <mat-error *ngIf="formErrors.ptkpTanggungan.required">
+              PTKP Tanggungan is required!
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field fxFlex="50">
+            <input matInput type="number" placeholder="Max Tanggungan" formControlName="maxTanggungan" required>
+            <mat-error *ngIf="formErrors.maxTanggungan.required">
+              Max Tanggungan is required!
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" style="margin-bottom: 25px;">
+          <mat-checkbox formControlName="rounding">Pembulatan Ribuan</mat-checkbox>
+        </div>
+
+        <mat-divider style="margin-top: 25px; margin-bottom: 25px"></mat-divider>
+
+        <div class="button-row" style="margin-bottom:25px; text-align: right;">
+          <button mat-raised-button class="mat-accent" type="button" (click)="addDetail()">
+            Add Detail
+          </button>
+        </div>
+
+        <ngx-datatable class="material" [rows]="taxSetDtl" [limit]="10" [columnMode]="'force'" [rowHeight]="'auto'" [scrollbarH]="true"
+          [footerHeight]="50">
+
+          <ngx-datatable-column name="#" [width]="30" [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false">
+            <ng-template let-rowIndex="rowIndex" ngx-datatable-cell-template>
+              {{rowIndex + 1}}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column prop='salaryBottom' name='Yearly Salary Bottom'></ngx-datatable-column>
+          <ngx-datatable-column prop='salaryTop' name='Yearly Salary Top'></ngx-datatable-column>
+          <ngx-datatable-column prop='taxNpwp' name='NPWP'></ngx-datatable-column>
+          <ngx-datatable-column prop='taxNonNpwp' name='Non NPWP'></ngx-datatable-column>          
+          <ngx-datatable-column name="Action" [width]="150" [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <div class="button-row">
+                <button mat-icon-button color="primary" type="button" (click)="editDetail(row)">
+                  <mat-icon aria-label="Edit">edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" type="button" (click)="deleteDetail(row)">
+                  <mat-icon aria-label="Delete">delete</mat-icon>
+                </button>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" style="margin-top: 25px;">
+          <div class="button-row">
+            <button mat-raised-button class="mat-accent" type="submit">
+              Submit
+            </button>
+            <a mat-raised-button [routerLink]="['/master/taxsetup/']">
+              Back
+            </a>
+          </div>
+        </div>
+
+      </form>
+      <!-- / REACTIVE FORM EXAMPLE -->
+    </div>
+  </div>
+  <!-- / CONTENT -->
+
+</div>

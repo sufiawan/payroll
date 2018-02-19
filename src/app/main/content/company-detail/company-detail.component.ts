@@ -11,11 +11,12 @@ import { CompanyService } from '../../services/company.service';
 })
 
 export class CompanyDetailComponent implements OnInit {
+  
   form: FormGroup;
   formErrors: any;
-  comp: Company = { id: 0, companyCd: '', name: '', location: '' };
+  comp: Company = { id: 0, companyCd: null, name: null, location: null };
   sub: any;
-  loadingbar: boolean = true;
+  loadingbar = true;
 
   constructor(
     private companySvc: CompanyService,
@@ -40,7 +41,7 @@ export class CompanyDetailComponent implements OnInit {
     });
 
     this.sub = this.route.params.subscribe(params => {
-      let id = Number.parseInt(params['id']);
+      const id = Number.parseInt(params['id']);
       if (id) {
         this.loadingbar = false;
 
