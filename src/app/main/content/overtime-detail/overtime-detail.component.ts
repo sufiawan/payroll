@@ -15,11 +15,10 @@ import { OvertimeDetailFormComponent } from '../overtime-detail-form/overtime-de
 export class OvertimeDetailComponent implements OnInit {
 
   form: FormGroup;
-  formErrors: any;
-  ovtDtl: OvertimeDetail[] = [];
+  formErrors: any;  
   ovtDtlWeekday: OvertimeDetail[] = [];
   ovtDtlWeekend: OvertimeDetail[] = [];
-  ovt: Overtime = { id: 0, overtimeCd: null, name: null, roundingMin: null, overtimeDtls: null };  
+  ovt: Overtime = { id: 0, overtimeCd: null, name: null, roundingMin: null, overtimeDtls: [] };  
   sub: any;
   loadingbar = true;
 
@@ -63,8 +62,6 @@ export class OvertimeDetailComponent implements OnInit {
               roundingMin: this.ovt.roundingMin
             });
 
-            this.ovtDtl = res.overtimeDtls;
-
             this.regroupDetail();
 
             this.loadingbar = true;
@@ -80,8 +77,8 @@ export class OvertimeDetailComponent implements OnInit {
 
   onSubmit(ovt: Overtime) {
     if (this.form.valid) {
-      this.loadingbar = false;
-      ovt.overtimeDtls = this.ovtDtl;
+      this.loadingbar = false;    
+      ovt.overtimeDtls = this.ovt.overtimeDtls;
 
       if (ovt.id === 0) {
         this.ovtSvc.addData(ovt).subscribe(res => { this.loadingbar = true; });
@@ -92,15 +89,15 @@ export class OvertimeDetailComponent implements OnInit {
   }
 
   regroupDetail() {
-    this.ovtDtlWeekday = this.ovtDtl.filter(x => x.type === 'N');
-    this.ovtDtlWeekend = this.ovtDtl.filter(x => x.type === 'H');
+    this.ovtDtlWeekday = this.ovt.overtimeDtls.filter(x => x.type === 'N');
+    this.ovtDtlWeekend = this.ovt.overtimeDtls.filter(x => x.type === 'H');
   }
 
   addDetail() {
     let dialogRef = this.dialog.open(OvertimeDetailFormComponent);
 
-    dialogRef.afterClosed().subscribe(res => {
-      this.ovtDtl.push(res);
+    dialogRef.afterClosed().subscribe(res => {      
+      this.ovt.overtimeDtls.push(res);
 
       this.regroupDetail();
     });
@@ -114,10 +111,10 @@ export class OvertimeDetailComponent implements OnInit {
     );
 
     dialogRef.afterClosed().subscribe(res => {
-      let idx = this.ovtDtl.indexOf(dtl);
+      let idx = this.ovt.overtimeDtls.indexOf(dtl);
 
-      for (var prop in this.ovtDtl[idx]) {
-        this.ovtDtl[idx][prop] = res[prop];
+      for (var prop in this.ovt.overtimeDtls[idx]) {
+        this.ovt.overtimeDtls[idx][prop] = res[prop];
       }
 
       this.regroupDetail();
@@ -126,7 +123,7 @@ export class OvertimeDetailComponent implements OnInit {
 
   deleteDetail(dtl: OvertimeDetail) {
     if (confirm('Are you sure want to delete?')) {
-      this.ovtDtl.splice(this.ovtDtl.indexOf(dtl), 1);
+      this.ovt.overtimeDtls.splice(this.ovt.overtimeDtls.indexOf(dtl), 1);
 
       this.regroupDetail();
     }

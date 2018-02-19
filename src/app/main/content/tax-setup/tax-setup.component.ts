@@ -28,7 +28,7 @@ export class TaxSetupComponent implements OnInit {
   }
 
   deleteRow(taxSet: TaxSetup): void {
-    if (confirm('Are you sure want to delete?')) {
+    if (confirm('Are you sure want to delete?')) {      
       this.svc.deleteData(taxSet).subscribe(res => {
         this.taxSetups.splice(this.taxSetups.indexOf(taxSet), 1);
       });

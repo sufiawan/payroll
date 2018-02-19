@@ -23,7 +23,7 @@ export class TaxSetupService {
   constructor(
     private http: HttpClient,
     private logErrorHandle: LogErrorHandleService,
-    private router: Router,
+    private router: Router
   ) { }
 
   getList(): Observable<TaxSetup[]> {
@@ -49,7 +49,7 @@ export class TaxSetupService {
   }
 
   updateData(taxSetup: TaxSetup) {
-    return this.http.put<TaxSetup>(this.baseUrl + taxSetup.id + '/', taxSetup, httpOptions).pipe(
+    return this.http.put<TaxSetup>(this.baseUrl + taxSetup.company + '/', taxSetup, httpOptions).pipe(
       tap((taxSetup: TaxSetup) => {
         this.logErrorHandle.log('TaxSetup', 'TaxSetup successfully updated', 0);
         this.router.navigate(['master/taxsetup']);
@@ -59,7 +59,7 @@ export class TaxSetupService {
   }
 
   deleteData(taxSetup: TaxSetup): Observable<TaxSetup> {
-    return this.http.delete<TaxSetup>(`${this.baseUrl}${taxSetup.id}/`, httpOptions).pipe(
+    return this.http.delete<TaxSetup>(`${this.baseUrl}${taxSetup.company}/`, httpOptions).pipe(
       tap(_ => this.logErrorHandle.log('TaxSetup', 'TaxSetup successfully deleted', 0)),
       catchError(this.logErrorHandle.handleError<TaxSetup>('delete'))
     );

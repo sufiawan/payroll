@@ -16,19 +16,19 @@ import { TaxSetupDetailFormComponent } from '../tax-setup-detail-form/tax-setup-
 })
 export class TaxSetupDetailComponent implements OnInit {
 
-  compOption: Company[] = [];
-  taxSetDtl: TaxSetupDetail[] = [];
-  taxSet: TaxSetup = {
-    id: 0,
+  compOption: Company[] = [];  
+  taxSet: TaxSetup = {    
     company: null,
+    companyName: null,
     ptkpPribadi: null,
     ptkpIstri: null,
     ptkpTanggungan: null,
     maxTanggungan: null,
     rounding: false,
-    taxSetupDtls: null
+    taxSetupDtls: []
   } ;  
 
+  paramId: number;
   form: FormGroup;
   formErrors: any;  
   sub: any;
@@ -56,8 +56,7 @@ export class TaxSetupDetailComponent implements OnInit {
 
     this.compSvc.getCompanies().subscribe(res => this.compOption = res );
 
-    this.form = this.formBuilder.group({
-      id: [this.taxSet.id],
+    this.form = this.formBuilder.group({      
       company: [this.taxSet.company, Validators.required],
       ptkpPribadi: [this.taxSet.ptkpPribadi, Validators.required],
       ptkpIstri: [this.taxSet.ptkpIstri, Validators.required],
@@ -67,16 +66,15 @@ export class TaxSetupDetailComponent implements OnInit {
     });
 
     this.sub = this.route.params.subscribe(params => {
-      const id = Number.parseInt(params['id']);
-      if (id) {
+      this.paramId = Number.parseInt(params['id']);      
+      if (this.paramId) {
         this.loadingbar = false;
 
-        this.svc.getData(id)
+        this.svc.getData(this.paramId)
           .subscribe(res => {
             this.taxSet = res;
 
-            this.form.setValue({
-              id: this.taxSet.id,
+            this.form.setValue({              
               company: this.taxSet.company,
               ptkpPribadi: this.taxSet.ptkpPribadi,
               ptkpIstri: this.taxSet.ptkpIstri,
@@ -84,8 +82,6 @@ export class TaxSetupDetailComponent implements OnInit {
               maxTanggungan: this.taxSet.maxTanggungan,
               rounding: this.taxSet.rounding
             });
-
-            this.taxSetDtl = res.taxSetupDtls;
 
             this.loadingbar = true;
           });
@@ -100,12 +96,11 @@ export class TaxSetupDetailComponent implements OnInit {
 
   onSubmit(taxSet: TaxSetup) {
     if (this.form.valid) {
-      if (this.taxSetDtl.length > 0) {
-        this.loadingbar = false;
+      if (this.taxSet.taxSetupDtls.length > 0) {
+        this.loadingbar = false;        
+        taxSet.taxSetupDtls = this.taxSet.taxSetupDtls;
 
-        taxSet.taxSetupDtls = this.taxSetDtl;
-
-        if (taxSet.id === 0) {
+        if (!this.paramId) {
           this.svc.addData(taxSet).subscribe(res => { this.loadingbar = true; });
         } else {
           this.svc.updateData(taxSet).subscribe(res => { this.loadingbar = true; });
@@ -124,17 +119,17 @@ export class TaxSetupDetailComponent implements OnInit {
     );
 
     dialogRef.afterClosed().subscribe(res => {
-      const idx = this.taxSetDtl.indexOf(dtl);
+      const idx = this.taxSet.taxSetupDtls.indexOf(dtl);
 
-      for (var prop in this.taxSetDtl[idx]) {
-        this.taxSetDtl[idx][prop] = res[prop];
+      for (var prop in this.taxSet.taxSetupDtls[idx]) {
+        this.taxSet.taxSetupDtls[idx][prop] = res[prop];
       }
     });
   }
 
   deleteDetail(dtl: TaxSetupDetail) {
     if (confirm('Are you sure want to delete?')) {
-      this.taxSetDtl.splice(this.taxSetDtl.indexOf(dtl), 1);
+      this.taxSet.taxSetupDtls.splice(this.taxSet.taxSetupDtls.indexOf(dtl), 1);
     }
   }
 
@@ -142,7 +137,7 @@ export class TaxSetupDetailComponent implements OnInit {
     const dialogRef = this.dialog.open(TaxSetupDetailFormComponent);
 
     dialogRef.afterClosed().subscribe(res => {
-      this.taxSetDtl.push(res);
+      this.taxSet.taxSetupDtls.push(res);
     });
   }
 

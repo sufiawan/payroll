@@ -1,9 +1,9 @@
 import { TaxSetupDetail } from "./tax-setup-detail";
 import { Company } from "./company";
 
-export interface TaxSetup {
-    id: number;
+export interface TaxSetup {    
     company: Company;
+    companyName: string;
     ptkpPribadi: number;
     ptkpIstri: number;
     ptkpTanggungan: number;
