@@ -23,13 +23,11 @@ export class PayrollComponentDetailComponent implements OnInit {
 
   payCompt: PayrollComponent = {
     id: 0, componentCd: null, name: null, calcType: null, calcTypeDescs: null,
-    tax: false, absentDeduct: false, payrollDeduct: false, compSubsidize: false, proRate: null, payrollComponentDtls: null
+    tax: false, absentDeduct: false, payrollDeduct: false, compSubsidize: false, proRate: null, payrollComponentDtls: []
   };
 
   sub: any;
   loadingbar = true;
-
-  payComptDetail: PayrollComponentDetail[] = [];
 
   calcTypeOption = [
     { value: 'D', display_name: 'Daily' },
@@ -91,12 +89,9 @@ export class PayrollComponentDetailComponent implements OnInit {
               proRate: this.payCompt.proRate
             });
 
-            this.payComptDetail = res.payrollComponentDtls;
-
             this.loadingbar = true;
-          }
-          );
-      }
+          });
+        }
     });
 
     this.form.valueChanges.subscribe(() => {
@@ -111,10 +106,10 @@ export class PayrollComponentDetailComponent implements OnInit {
 
   onSubmit(payCompt: PayrollComponent) {
     if (this.form.valid) {
-      if (this.payComptDetail.length > 0) {
+      if (this.payCompt.payrollComponentDtls.length > 0) {
         this.loadingbar = false;
 
-        payCompt.payrollComponentDtls = this.payComptDetail;
+        payCompt.payrollComponentDtls = this.payCompt.payrollComponentDtls;
 
         if (payCompt.id === 0) {
           this.payComptSvc.addPayrollComponent(payCompt).subscribe(res => { this.loadingbar = true; });
@@ -135,17 +130,17 @@ export class PayrollComponentDetailComponent implements OnInit {
     );
 
     dialogRef.afterClosed().subscribe(res => {
-      let idx = this.payComptDetail.indexOf(dtl);
+      let idx = this.payCompt.payrollComponentDtls.indexOf(dtl);
 
-      for (var prop in this.payComptDetail[idx]) {
-        this.payComptDetail[idx][prop] = res[prop];
+      for (var prop in this.payCompt.payrollComponentDtls[idx]) {
+        this.payCompt.payrollComponentDtls[idx][prop] = res[prop];
       }
     });
   }
 
   deleteDetail(dtl: PayrollComponentDetail) {
     if (confirm('Are you sure want to delete?')) {
-      this.payComptDetail.splice(this.payComptDetail.indexOf(dtl), 1);
+      this.payCompt.payrollComponentDtls.splice(this.payCompt.payrollComponentDtls.indexOf(dtl), 1);
     }
   }
 
@@ -153,7 +148,7 @@ export class PayrollComponentDetailComponent implements OnInit {
     const dialogRef = this.dialog.open(PayrollComponentDetailFormComponent);
 
     dialogRef.afterClosed().subscribe(res => {
-      this.payComptDetail.push(res);
+      this.payCompt.payrollComponentDtls.push(res);
     });
   }
 

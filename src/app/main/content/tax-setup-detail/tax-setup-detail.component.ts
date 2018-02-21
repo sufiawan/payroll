@@ -16,8 +16,9 @@ import { TaxSetupDetailFormComponent } from '../tax-setup-detail-form/tax-setup-
 })
 export class TaxSetupDetailComponent implements OnInit {
 
-  compOption: Company[] = [];  
-  taxSet: TaxSetup = {    
+  compOption: Company[] = [];
+  comp: Company = { id: 0, companyCd: null, name: null, location: null };
+  taxSet: TaxSetup = {
     company: null,
     companyName: null,
     ptkpPribadi: null,
@@ -26,11 +27,11 @@ export class TaxSetupDetailComponent implements OnInit {
     maxTanggungan: null,
     rounding: false,
     taxSetupDtls: []
-  } ;  
+  };
 
   paramId: number;
   form: FormGroup;
-  formErrors: any;  
+  formErrors: any;
   sub: any;
   loadingbar = true;
 
@@ -47,16 +48,16 @@ export class TaxSetupDetailComponent implements OnInit {
       ptkpPribadi: {},
       ptkpIstri: {},
       ptkpTanggungan: {},
-      maxTanggungan: {},            
+      maxTanggungan: {},
     };
 
   }
 
   ngOnInit() {
 
-    this.compSvc.getCompanies().subscribe(res => this.compOption = res );
+    this.compSvc.getCompanies().subscribe(res => this.compOption = res);
 
-    this.form = this.formBuilder.group({      
+    this.form = this.formBuilder.group({
       company: [this.taxSet.company, Validators.required],
       ptkpPribadi: [this.taxSet.ptkpPribadi, Validators.required],
       ptkpIstri: [this.taxSet.ptkpIstri, Validators.required],
@@ -66,7 +67,7 @@ export class TaxSetupDetailComponent implements OnInit {
     });
 
     this.sub = this.route.params.subscribe(params => {
-      this.paramId = Number.parseInt(params['id']);      
+      this.paramId = Number.parseInt(params['id']);
       if (this.paramId) {
         this.loadingbar = false;
 
@@ -74,7 +75,7 @@ export class TaxSetupDetailComponent implements OnInit {
           .subscribe(res => {
             this.taxSet = res;
 
-            this.form.setValue({              
+            this.form.setValue({
               company: this.taxSet.company,
               ptkpPribadi: this.taxSet.ptkpPribadi,
               ptkpIstri: this.taxSet.ptkpIstri,
@@ -82,6 +83,9 @@ export class TaxSetupDetailComponent implements OnInit {
               maxTanggungan: this.taxSet.maxTanggungan,
               rounding: this.taxSet.rounding
             });
+
+            this.comp = res.company;
+            this.form.controls['company'].disable();
 
             this.loadingbar = true;
           });
@@ -97,13 +101,15 @@ export class TaxSetupDetailComponent implements OnInit {
   onSubmit(taxSet: TaxSetup) {
     if (this.form.valid) {
       if (this.taxSet.taxSetupDtls.length > 0) {
-        this.loadingbar = false;        
+        this.loadingbar = false;
         taxSet.taxSetupDtls = this.taxSet.taxSetupDtls;
+        console.log(this.form.getRawValue());
 
-        if (!this.paramId) {
-          this.svc.addData(taxSet).subscribe(res => { this.loadingbar = true; });
-        } else {
+        if (this.paramId) {
+          taxSet.company = this.comp;
           this.svc.updateData(taxSet).subscribe(res => { this.loadingbar = true; });
+        } else {
+          this.svc.addData(taxSet).subscribe(res => { this.loadingbar = true; });
         }
       } else {
         alert('Please fill Tax Detail');

@@ -2,7 +2,7 @@ import { Time } from "@angular/common";
 
 export interface AbsentPatternDetail {
     id: number;
-    dayPeriod: string;
+    dayPeriod: number;
     dayStatus: string;
     timeIn: Time;
     timeOut: Time;
