@@ -34,6 +34,7 @@ import { TaxSetupComponent } from './tax-setup/tax-setup.component';
 import { TaxSetupDetailComponent } from './tax-setup-detail/tax-setup-detail.component';
 import { AbsentPatternComponent } from './absent-pattern/absent-pattern.component';
 import { AbsentPatternDetailComponent } from './absent-pattern-detail/absent-pattern-detail.component';
+import { AbsentPatternDetailFormComponent } from './absent-pattern-detail-form/absent-pattern-detail-form.component';
 
 const routes = [
   {
@@ -282,7 +283,8 @@ const routes = [
   entryComponents: [
     PayrollComponentDetailFormComponent,
     OvertimeDetailFormComponent,
-    TaxSetupDetailFormComponent
+    TaxSetupDetailFormComponent,
+    AbsentPatternDetailFormComponent
   ]
 })
 export class AppRoutingModule { }

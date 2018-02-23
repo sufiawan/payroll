@@ -3,6 +3,10 @@ import { AbsentPattern } from '../../models/absent-pattern';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AbsentPatternService } from '../../services/absent-pattern.service';
 import { ActivatedRoute } from '@angular/router';
+import { Time } from '@angular/common';
+import { MatDialog } from '@angular/material';
+import { AbsentPatternDetailFormComponent } from '../absent-pattern-detail-form/absent-pattern-detail-form.component';
+import { AbsentPatternDetail } from '../../models/absent-pattern-detail';
 
 @Component({
   selector: 'app-absent-pattern-detail',
@@ -12,15 +16,17 @@ import { ActivatedRoute } from '@angular/router';
 
 export class AbsentPatternDetailComponent implements OnInit {
 
-  absentPattern: AbsentPattern = { id: 0, patternCd: null, name: null, absentPatternDtls: [
-    { id: 0, dayPeriod: 1, dayStatus: 'I', timeIn: null, timeOut: null, breakIn: null, breakOut: null },
-    { id: 0, dayPeriod: 2, dayStatus: null, timeIn: null, timeOut: null, breakIn: null, breakOut: null },
-    { id: 0, dayPeriod: 3, dayStatus: null, timeIn: null, timeOut: null, breakIn: null, breakOut: null },
-    { id: 0, dayPeriod: 4, dayStatus: null, timeIn: null, timeOut: null, breakIn: null, breakOut: null },
-    { id: 0, dayPeriod: 5, dayStatus: null, timeIn: null, timeOut: null, breakIn: null, breakOut: null },
-    { id: 0, dayPeriod: 6, dayStatus: null, timeIn: null, timeOut: null, breakIn: null, breakOut: null },
-    { id: 0, dayPeriod: 7, dayStatus: null, timeIn: null, timeOut: null, breakIn: null, breakOut: null },
-  ]};
+  absentPattern: AbsentPattern = {
+    id: 0, patternCd: null, name: null, absentPatternDtls: [
+      { id: 0, dayPeriod: 1, dayStatus: 'I', dayStatusDesc: 'In', timeIn: '00:00', timeOut: '00:00', breakIn: '00:00', breakOut: '00:00' },
+      { id: 0, dayPeriod: 2, dayStatus: 'I', dayStatusDesc: 'In', timeIn: '00:00', timeOut: '00:00', breakIn: '00:00', breakOut: '00:00' },
+      { id: 0, dayPeriod: 3, dayStatus: 'I', dayStatusDesc: 'In', timeIn: '00:00', timeOut: '00:00', breakIn: '00:00', breakOut: '00:00' },
+      { id: 0, dayPeriod: 4, dayStatus: 'I', dayStatusDesc: 'In', timeIn: '00:00', timeOut: '00:00', breakIn: '00:00', breakOut: '00:00' },
+      { id: 0, dayPeriod: 5, dayStatus: 'I', dayStatusDesc: 'In', timeIn: '00:00', timeOut: '00:00', breakIn: '00:00', breakOut: '00:00' },
+      { id: 0, dayPeriod: 6, dayStatus: 'O', dayStatusDesc: 'Out', timeIn: '00:00', timeOut: '00:00', breakIn: '00:00', breakOut: '00:00' },
+      { id: 0, dayPeriod: 7, dayStatus: 'O', dayStatusDesc: 'Out', timeIn: '00:00', timeOut: '00:00', breakIn: '00:00', breakOut: '00:00' },
+    ]
+  };
 
   form: FormGroup;
   formErrors: any;
@@ -31,7 +37,8 @@ export class AbsentPatternDetailComponent implements OnInit {
   constructor(
     private svc: AbsentPatternService,
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private dialog: MatDialog
   ) {
 
     this.formErrors = {
@@ -65,8 +72,9 @@ export class AbsentPatternDetailComponent implements OnInit {
             });
 
             this.loadingbar = true;
-          });
-      }
+          }
+        );
+      }      
     });
 
     this.form.valueChanges.subscribe(() => {
@@ -80,6 +88,7 @@ export class AbsentPatternDetailComponent implements OnInit {
       if (this.absentPattern.absentPatternDtls.length != 0) {
 
         this.loadingbar = false;
+        absentPattern.absentPatternDtls = this.absentPattern.absentPatternDtls;
 
         if (absentPattern.id === 0) {
           this.svc.addData(absentPattern).subscribe(res => { this.loadingbar = true; });
@@ -92,10 +101,28 @@ export class AbsentPatternDetailComponent implements OnInit {
     }
   }
 
-  updateValue(event, cell, rowIndex) {    
+  updateValue(event, cell, rowIndex) {
     this.editing[rowIndex + '-' + cell] = false;
     this.absentPattern.absentPatternDtls[rowIndex][cell] = event.target.value;
-    this.absentPattern.absentPatternDtls = [...this.absentPattern.absentPatternDtls];    
+    this.absentPattern.absentPatternDtls = [...this.absentPattern.absentPatternDtls];
+  }
+
+  editDetail(dtl: AbsentPatternDetail) {
+    let dialogRef = this.dialog.open(AbsentPatternDetailFormComponent,
+      {
+        data: dtl
+      }
+    );
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        let idx = this.absentPattern.absentPatternDtls.indexOf(dtl);
+
+        for (var prop in this.absentPattern.absentPatternDtls[idx]) {          
+          this.absentPattern.absentPatternDtls[idx][prop] = res[prop];
+        }
+      }
+    });
   }
 
   ngOnDestroy() {

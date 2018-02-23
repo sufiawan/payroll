@@ -91,7 +91,7 @@ export class PayrollComponentDetailComponent implements OnInit {
 
             this.loadingbar = true;
           });
-        }
+      }
     });
 
     this.form.valueChanges.subscribe(() => {
@@ -130,11 +130,13 @@ export class PayrollComponentDetailComponent implements OnInit {
     );
 
     dialogRef.afterClosed().subscribe(res => {
-      let idx = this.payCompt.payrollComponentDtls.indexOf(dtl);
+      if (res) {
+        let idx = this.payCompt.payrollComponentDtls.indexOf(dtl);
 
-      for (var prop in this.payCompt.payrollComponentDtls[idx]) {
-        this.payCompt.payrollComponentDtls[idx][prop] = res[prop];
-      }
+        for (var prop in this.payCompt.payrollComponentDtls[idx]) {
+          this.payCompt.payrollComponentDtls[idx][prop] = res[prop];
+        };
+      };
     });
   }
 
@@ -148,7 +150,9 @@ export class PayrollComponentDetailComponent implements OnInit {
     const dialogRef = this.dialog.open(PayrollComponentDetailFormComponent);
 
     dialogRef.afterClosed().subscribe(res => {
-      this.payCompt.payrollComponentDtls.push(res);
+      if (res) {
+        this.payCompt.payrollComponentDtls.push(res);
+      };
     });
   }
 

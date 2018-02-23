@@ -125,11 +125,13 @@ export class TaxSetupDetailComponent implements OnInit {
     );
 
     dialogRef.afterClosed().subscribe(res => {
-      const idx = this.taxSet.taxSetupDtls.indexOf(dtl);
+      if (res) {
+        const idx = this.taxSet.taxSetupDtls.indexOf(dtl);
 
-      for (var prop in this.taxSet.taxSetupDtls[idx]) {
-        this.taxSet.taxSetupDtls[idx][prop] = res[prop];
-      }
+        for (var prop in this.taxSet.taxSetupDtls[idx]) {
+          this.taxSet.taxSetupDtls[idx][prop] = res[prop];
+        };
+      };
     });
   }
 
@@ -143,7 +145,9 @@ export class TaxSetupDetailComponent implements OnInit {
     const dialogRef = this.dialog.open(TaxSetupDetailFormComponent);
 
     dialogRef.afterClosed().subscribe(res => {
-      this.taxSet.taxSetupDtls.push(res);
+      if (res) {
+        this.taxSet.taxSetupDtls.push(res);
+      };
     });
   }
 

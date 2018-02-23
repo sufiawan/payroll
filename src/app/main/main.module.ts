@@ -35,6 +35,7 @@ import { TimeOffSchemeService } from './services/time-off-scheme.service';
 import { OvertimeService } from './services/overtime.service';
 import { TaxSetupService } from './services/tax-setup.service'; 
 import { AbsentPatternService } from './services/absent-pattern.service';
+import { AbsentPatternDetailFormComponent } from './content/absent-pattern-detail-form/absent-pattern-detail-form.component';
 
 @NgModule({
     declarations: [
@@ -46,7 +47,8 @@ import { AbsentPatternService } from './services/absent-pattern.service';
         FuseToolbarComponent,
         FuseNavbarVerticalToggleDirective,
         FuseThemeOptionsComponent,
-        FuseQuickPanelComponent
+        FuseQuickPanelComponent,
+        AbsentPatternDetailFormComponent
     ],
     imports     : [
         SharedModule,
